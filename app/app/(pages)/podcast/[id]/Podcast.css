@@ -1,7 +1,0 @@
-.hidden-poster {
-  background: transparent !important;
-}
-
-.hidden-poster::cue {
-  display: none;
-}
