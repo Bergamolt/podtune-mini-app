@@ -1,5 +1,6 @@
 import { podcastIndex } from '@/app/utils/podcastIndex'
 import { Caption, Title, Text } from '@telegram-apps/telegram-ui'
+import './Podcast.css'
 
 type PodcastPageProps = {
   params: {
@@ -28,18 +29,15 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
       {/* <Headline weight='2'>Episodes</Headline> */}
 
       {epicodes.items.map((episode: any) => (
-        <div
-          key={episode.id}
-          className='px-4 py-2 flex flex-col'
-        >
+        <div key={episode.id} className='px-4 py-2 flex flex-col'>
           <Text weight='2'>{episode.title}</Text>
           <Caption className='text-gray-500 mt-2'>
             {episode.datePublishedPretty}
           </Caption>
           {/* <p>{episode.description}</p> */}
-          <audio className='w-full mt-4' controls>
+          <video className='w-full mt-4 hidden-poster' controls poster={episode.image}>
             <source src={episode.enclosureUrl} type='audio/mpeg' />
-          </audio>
+          </video>
         </div>
       ))}
     </div>
