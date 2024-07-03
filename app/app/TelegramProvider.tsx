@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname, useRouter } from 'next/navigation'
 import Script from 'next/script'
 import {
   createContext,
@@ -21,6 +22,8 @@ export const TelegramContext = createContext<ITelegramContext>({})
 
 export const TelegramProvider = ({ children }: { children: ReactNode }) => {
   const [webApp, setWebApp] = useState<TelegramWebApps.WebApp | null>(null)
+  const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const app = (window as any).Telegram?.WebApp as TelegramWebApps.WebApp
@@ -33,6 +36,19 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (!webApp) {
+      return undefined
+    }
+
+    if (pathname !== '/') {
+      webApp.BackButton.onClick(router.back)
+      webApp.BackButton.show()
+    } else {
+      webApp.BackButton.hide()
+    }
+  }, [pathname, router, webApp])
 
   const value = useMemo(() => {
     return webApp
