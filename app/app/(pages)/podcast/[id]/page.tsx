@@ -13,7 +13,7 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
 
   return (
     <div>
-      <div className='p-4 flex flex-row border border-gray-200'>
+      <div className='p-4 flex flex-row border-b border-gray-200'>
         <img
           src={podcast.feed.image}
           alt={podcast.feed.title}
@@ -30,7 +30,7 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
       {epicodes.items.map((episode: any) => (
         <div
           key={episode.id}
-          className='px-4 py-2 flex flex-col border-b border-gray-200'
+          className='px-4 py-2 flex flex-col'
         >
           <Text weight='2'>{episode.title}</Text>
           <Caption className='text-gray-500 mt-2'>
