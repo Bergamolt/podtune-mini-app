@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { PodcastsTrendingResponse } from '@/app/types'
 import { podcastIndex } from '@/app/utils/podcastIndex'
+import { Headline } from '@telegram-apps/telegram-ui'
 
 export async function TopShows() {
   const data: PodcastsTrendingResponse = await podcastIndex.podcastsTrending(
@@ -11,7 +12,7 @@ export async function TopShows() {
 
   return (
     <section className='p-4'>
-      <h2 className='text-xl font-semibold mt-4'>Top Shows</h2>
+      <Headline weight='2'>Top Shows</Headline>
       <div className='grid grid-cols-3 gap-2 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-screen-lg mx-auto mt-4'>
         {data.feeds.map((feed) => (
           <Link key={feed.id} href={`/podcast/${feed.id}`}>
