@@ -1,5 +1,5 @@
 import { podcastIndex } from '@/app/utils/podcastIndex'
-import Image from 'next/image'
+import { Caption, Title, Text } from '@telegram-apps/telegram-ui'
 
 type PodcastPageProps = {
   params: {
@@ -13,22 +13,29 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
 
   return (
     <div>
-      <div className='bg-white shadow-sm rounded-md p-4 flex flex-col'>
+      <div className='p-4 flex flex-row border border-gray-200'>
         <img
           src={podcast.feed.image}
           alt={podcast.feed.title}
-          className='w-48 h-48 object-cover rounded-md mx-auto'
+          className='w-28 h-28 object-cover rounded-md mr-4'
         />
-        <h3 className='text-xl font-semibold mt-4'>{podcast.feed.title}</h3>
-        <p className='text-gray-500 mt-2'>{podcast.feed.description}</p>
+        <div className='flex flex-col justify-start'>
+          <Title level='1'>{podcast.feed.title}</Title>
+          <Caption weight='2'>{podcast.feed.author}</Caption>
+        </div>
       </div>
+
+      {/* <Headline weight='2'>Episodes</Headline> */}
+
       {epicodes.items.map((episode: any) => (
         <div
           key={episode.id}
-          className='bg-white shadow-sm rounded-md p-4 mt-4'
+          className='px-4 py-2 flex flex-col border-b border-gray-200'
         >
-          <p className='text-xl font-semibold'>{episode.title}</p>
-          <p className='text-gray-500 mt-2'>{episode.datePublishedPretty}</p>
+          <Text weight='2'>{episode.title}</Text>
+          <Caption className='text-gray-500 mt-2'>
+            {episode.datePublishedPretty}
+          </Caption>
           {/* <p>{episode.description}</p> */}
           <audio className='w-full mt-4' controls>
             <source src={episode.enclosureUrl} type='audio/mpeg' />
