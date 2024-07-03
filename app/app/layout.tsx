@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <AppRoot appearance='dark' platform='ios'>
+        <AppRoot>
           <TelegramProvider>{children}</TelegramProvider>
         </AppRoot>
       </body>
