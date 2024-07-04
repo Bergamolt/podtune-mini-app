@@ -14,8 +14,8 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
   const epicodes = await podcastIndex.episodesByFeedId(params.id)
 
   return (
-    <div>
-      <div className='p-4 flex flex-row '>
+    <>
+      <div className='p-4 flex flex-row bg-[var(--tgui--section\_bg_\color)]'>
         <img
           src={podcast.feed.image}
           alt={podcast.feed.title}
@@ -42,6 +42,6 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
           <Divider />
         </React.Fragment>
       ))}
-    </div>
+    </>
   )
 }

@@ -22,7 +22,7 @@ export function Player() {
   }
 
   return (
-    <FixedLayout vertical='bottom'>
+    <FixedLayout vertical='bottom' className='player'>
       <AudioPlayer
         ref={playerRef}
         src={episode.url}
