@@ -15,7 +15,7 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
 
   return (
     <>
-      <div className='p-4 flex flex-row bg-[var(--tgui--section\_bg\_color)]'>
+      <div className='p-4 flex flex-row'>
         <img
           src={podcast.feed.image}
           alt={podcast.feed.title}
