@@ -25,3 +25,7 @@ body:has(.player) {
   width: 100%;
   max-height: calc(var(--tg-viewport-stable-height) - var(--player-height));
 }
+
+.player {
+  top: calc(var(--tg-viewport-stable-height) - var(--player-height)) !important;
+}

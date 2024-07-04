@@ -30,7 +30,7 @@ export function Player() {
         onListen={(e) => {
           // const position = e.timeStamp * 1000
         }}
-        className='rounded-tl-xl rounded-tr-xl bg-[var(--tgui--secondary\_bg\_color)]'
+        className='rounded-tl-xl rounded-tr-xl bg-[var(--tgui--bg\_color)]'
       />
     </FixedLayout>
   )
