@@ -1,4 +1,5 @@
 import { TopShows } from '@/app/containers/TopShows'
+import { Suspense } from 'react'
 
 export default function Home() {
   return (

@@ -1,6 +1,7 @@
 'use client'
 
 import { useListeningEpisode } from '@/app/store/useListeningEpisode'
+import { IoPlayCircleSharp } from 'react-icons/io5'
 
 type PlayProps = {
   episode: any
@@ -22,8 +23,11 @@ export function Play({ episode, author }: PlayProps) {
   }
 
   return (
-    <button onClick={handlePlay} className='button button--primary'>
-      Play
+    <button onClick={handlePlay}>
+      <IoPlayCircleSharp
+        className='text-[var(--tgui--button\_color)]'
+        size={32}
+      />
     </button>
   )
 }

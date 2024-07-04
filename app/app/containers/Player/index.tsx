@@ -22,7 +22,7 @@ export function Player() {
   }
 
   return (
-    <FixedLayout vertical='bottom' className='p-2 !bottom-2'>
+    <FixedLayout vertical='bottom'>
       <AudioPlayer
         ref={playerRef}
         src={episode.url}
@@ -30,7 +30,7 @@ export function Player() {
         onListen={(e) => {
           // const position = e.timeStamp * 1000
         }}
-        className='rounded-md bg-[var(--secondary_bg_color)]'
+        className='rounded-tl-xl rounded-tr-xl bg-[var(--tgui--secondary\_bg\_color)]'
       />
     </FixedLayout>
   )
