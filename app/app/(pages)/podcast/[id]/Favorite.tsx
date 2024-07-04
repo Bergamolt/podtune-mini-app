@@ -1,0 +1,28 @@
+'use client'
+
+import { useFavoritePodcasts } from '@/app/store/useFavoritePodcasts'
+import { Button } from '@telegram-apps/telegram-ui'
+import { IoHeartOutline, IoHeartSharp } from 'react-icons/io5'
+
+type FavoriteProps = {
+  id: string
+  title: string
+  image: string
+  author: string
+}
+
+export function Favorite({ id, title, image, author }: FavoriteProps) {
+  const favorites = useFavoritePodcasts((state) => state.favorites)
+  const setFavorites = useFavoritePodcasts((state) => state.setFavorites)
+  const isFavorite = favorites.some((p) => p.id === id)
+
+  const handleFavorite = () => {
+    setFavorites({ id, title, image, author })
+  }
+
+  return (
+    <Button size='s' onClick={handleFavorite} className='w-auto'>
+      {isFavorite ? 'Added to favorites' : 'Add to favorites'}
+    </Button>
+  )
+}
