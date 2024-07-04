@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import '@telegram-apps/telegram-ui/dist/styles.css';
+import '@telegram-apps/telegram-ui/dist/styles.css'
 import { AppRoot } from '@telegram-apps/telegram-ui'
 import { TelegramProvider } from './TelegramProvider'
+import { Player } from './containers/Player'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,10 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <AppRoot>
-          <TelegramProvider>{children}</TelegramProvider>
+          <TelegramProvider>
+            {children}
+            <Player />
+          </TelegramProvider>
         </AppRoot>
       </body>
     </html>
