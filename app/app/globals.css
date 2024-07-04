@@ -23,5 +23,5 @@ body:has(.player) {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: calc(100% - var(--player-height));
+  max-height: calc(var(--tg-viewport-stable-height) - var(--player-height));
 }
