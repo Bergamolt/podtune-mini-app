@@ -38,7 +38,7 @@ export function ContinueListening() {
         {episodes.map((epicode) => (
           <div
             key={epicode.url}
-            className='flex min-w-64 h-20 p-2 bg-gray-400 rounded-lg items-center overflow-hidden'
+            className='flex min-w-64 max-w-64 h-20 p-2 bg-[var(--tg-theme-secondary-bg-color)] rounded-lg items-center overflow-hidden'
             onClick={setActiveEpisode(epicode)}
           >
             <img src={epicode.image} className='object-cover w-14 h-14' />

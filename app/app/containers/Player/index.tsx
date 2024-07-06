@@ -57,7 +57,7 @@ export function Player() {
           duration: episode.duration,
         })
       }}
-      className='bg-[var(--tg--plain\_background)] shadow-none player'
+      className='bg-[var(--tg-theme-bg-color)] shadow-none player'
       autoPlay={false}
       customVolumeControls={[]}
       customAdditionalControls={[]}
