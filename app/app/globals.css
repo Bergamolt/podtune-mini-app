@@ -13,6 +13,7 @@ body {
   flex-direction: column;
   width: 100%;
   height: var(--tg-viewport-stable-height);
+  overflow: hidden;
 }
 
 body:has(.player) {

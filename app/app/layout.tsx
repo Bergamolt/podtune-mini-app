@@ -5,6 +5,7 @@ import '@telegram-apps/telegram-ui/dist/styles.css'
 import { AppRoot } from '@telegram-apps/telegram-ui'
 import { TelegramProvider } from './TelegramProvider'
 import { Player } from './containers/Player'
+import ScrollLock from './ScrollLock'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <AppRoot className='root overflow-y-auto'>{children}</AppRoot>
           <Player />
         </TelegramProvider>
+        <ScrollLock />
       </body>
     </html>
   )
