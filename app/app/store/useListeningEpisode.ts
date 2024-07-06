@@ -7,6 +7,7 @@ export type Episode = {
   author: string
   image: string
   url: string
+  duration: number
   position?: number
 }
 

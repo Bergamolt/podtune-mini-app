@@ -1,14 +1,15 @@
 'use client'
 
+import { createRef, useEffect, useState } from 'react'
 import AudioPlayer from 'react-h5-audio-player'
 import H5AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
 import { useListeningEpisode } from '@/app/store/useListeningEpisode'
-import { FixedLayout } from '@telegram-apps/telegram-ui'
-import { createRef, useEffect, useState } from 'react'
+import { useContinueListening } from '@/app/store/useContinueListening'
 
 export function Player() {
   const episode = useListeningEpisode((state) => state.episode)
+  const setEpisodes = useContinueListening((state) => state.setEpisodes)
   const playerRef = createRef<H5AudioPlayer>()
 
   // useEffect(() => {
@@ -22,18 +23,23 @@ export function Player() {
   }
 
   return (
-    // <FixedLayout vertical='bottom' className='player !absolute'>
-      <AudioPlayer
-        ref={playerRef}
-        src={episode.url}
-        onPlay={(e) => console.log('onPlay')}
-        onListen={(e) => {
-          // const position = e.timeStamp * 1000
-        }}
-        className='bg-[var(--tg--plain\_background)] shadow-none player'
-        customVolumeControls={[]}
-        customAdditionalControls={[]}
-      />
-    // </FixedLayout>
+    <AudioPlayer
+      ref={playerRef}
+      src={episode.url}
+      onPlay={(e) => console.log('onPlay')}
+      onListen={(e) => {
+        setEpisodes({
+          title: episode.title,
+          author: episode.author,
+          image: episode.image,
+          url: episode.url,
+          position: e.timeStamp,
+          duration: episode.duration,
+        })
+      }}
+      className='bg-[var(--tg--plain\_background)] shadow-none player'
+      customVolumeControls={[]}
+      customAdditionalControls={[]}
+    />
   )
 }

@@ -6,11 +6,12 @@ import { IoPauseCircleSharp, IoPlayCircleSharp } from 'react-icons/io5'
 type PlayProps = {
   title: string
   image: string
-  enclosureUrl: string
+  url: string
   author: string
+  duration: number
 }
 
-export function Play({ author, title, image, enclosureUrl }: PlayProps) {
+export function Play({ author, title, image, url, duration }: PlayProps) {
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
 
@@ -19,13 +20,14 @@ export function Play({ author, title, image, enclosureUrl }: PlayProps) {
       title,
       author,
       image,
-      url: enclosureUrl,
+      url,
+      duration,
     })
   }
 
   return (
     <button onClick={handlePlay}>
-      {episode?.url !== enclosureUrl ? (
+      {episode?.url !== url ? (
         <IoPlayCircleSharp
           className='text-[var(--tgui--button\_color)]'
           size={32}

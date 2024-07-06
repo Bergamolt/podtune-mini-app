@@ -17,8 +17,9 @@ export async function Epicodes({ id, author }: EpicodesProps) {
         <Play
           author={author}
           title={episode.title}
-          enclosureUrl={episode.enclosureUrl}
+          url={episode.enclosureUrl}
           image={episode.image}
+          duration={episode.duration}
         />
         <div className='flex flex-col justify-start ml-2'>
           <Text weight='2'>{episode.title}</Text>
