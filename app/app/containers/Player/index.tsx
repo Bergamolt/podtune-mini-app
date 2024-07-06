@@ -10,13 +10,30 @@ import { useContinueListening } from '@/app/store/useContinueListening'
 export function Player() {
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisodes = useContinueListening((state) => state.setEpisodes)
+  const [isReady, setIsReady] = useState(false)
   const playerRef = createRef<H5AudioPlayer>()
 
-  // useEffect(() => {
-  //   if (playerRef.current) {
-  //     playerRef.current.audio.current.currentTime = 10
-  //   }
-  // }, [playerRef])
+  useEffect(() => {
+    if (episode?.position === undefined) {
+      return undefined
+    }
+
+    if (
+      playerRef.current &&
+      playerRef.current.audio &&
+      playerRef.current.audio.current &&
+      isReady
+    ) {
+      const currentTime = episode.position === 0 ? 0 : episode.position / 1000
+      playerRef.current.audio.current.currentTime = currentTime
+      playerRef.current.audio.current.play()
+    }
+
+    return () => {
+      setIsReady(false)
+      playerRef.current?.audio.current?.pause()
+    }
+  }, [episode, isReady, playerRef])
 
   if (!episode) {
     return null
@@ -27,6 +44,9 @@ export function Player() {
       ref={playerRef}
       src={episode.url}
       onPlay={(e) => console.log('onPlay')}
+      onLoadedData={() => {
+        setIsReady(true)
+      }}
       onListen={(e) => {
         setEpisodes({
           title: episode.title,
@@ -38,6 +58,7 @@ export function Player() {
         })
       }}
       className='bg-[var(--tg--plain\_background)] shadow-none player'
+      autoPlay={false}
       customVolumeControls={[]}
       customAdditionalControls={[]}
     />
