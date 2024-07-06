@@ -21,8 +21,8 @@ export function Favorite({ id, title, image, author }: FavoriteProps) {
   }
 
   return (
-    <Button size='s' onClick={handleFavorite} className='w-auto'>
-      {isFavorite ? 'Added to favorites' : 'Add to favorites'}
+    <Button size='s' onClick={handleFavorite} className='w-auto mt-2'>
+      {isFavorite ? 'Following' : 'Follow'}
     </Button>
   )
 }

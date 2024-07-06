@@ -1,8 +1,8 @@
-import { podcastIndex } from '@/app/utils/podcastIndex'
-import { Caption, Title, Text, Divider } from '@telegram-apps/telegram-ui'
-import { Play } from './Play'
-import React from 'react'
+import { Suspense } from 'react'
+import { Caption, Title, Divider, Spinner } from '@telegram-apps/telegram-ui'
 import { Favorite } from './Favorite'
+import { getPodcastByFeedId } from './utils/getPodcastByFeedId'
+import { Epicodes } from './Episodes'
 
 type PodcastPageProps = {
   params: {
@@ -11,49 +11,40 @@ type PodcastPageProps = {
 }
 
 export default async function PodcastPage({ params }: PodcastPageProps) {
-  const podcast = await podcastIndex.podcastsByFeedId(params.id)
-  const epicodes = await podcastIndex.episodesByFeedId(params.id)
+  const podcast = await getPodcastByFeedId(params.id)
 
   return (
     <>
-      <div className='p-4 flex flex-row bg-[var(--tgui--secondary\_bg\_color)]'>
+      <div className='p-4 flex flex-row bg-[var(--tgui--plain\_background)]'>
         <img
-          src={podcast.feed.image}
-          alt={podcast.feed.title}
+          src={podcast.image}
+          alt={podcast.title}
           className='w-28 h-28 object-cover rounded-md mr-4'
         />
         <div className='flex flex-col justify-center'>
-          <Title level='1'>{podcast.feed.title}</Title>
-          <Caption weight='2'>{podcast.feed.author}</Caption>
+          <Title level='1'>{podcast.title}</Title>
+          <Caption weight='2' className='text-gray-500'>
+            {podcast.author}
+          </Caption>
           <Favorite
-            id={podcast.feed.id}
-            title={podcast.feed.title}
-            image={podcast.feed.image}
-            author={podcast.feed.author}
+            id={podcast.id}
+            title={podcast.title}
+            image={podcast.image}
+            author={podcast.author}
           />
         </div>
       </div>
       <Divider />
 
-      {epicodes.items.map((episode: any) => (
-        <React.Fragment key={episode.id}>
-          <div className='px-4 py-2 flex flex-row'>
-            <Play
-              author={podcast.feed.title}
-              title={episode.title}
-              enclosureUrl={episode.enclosureUrl}
-              image={episode.image}
-            />
-            <div className='flex flex-col justify-start ml-2'>
-              <Text weight='2'>{episode.title}</Text>
-              <Caption className='text-gray-500 mt-2'>
-                {episode.datePublishedPretty}
-              </Caption>
-            </div>
+      <Suspense
+        fallback={
+          <div className='flex justify-center items-center h-96'>
+            <Spinner size='s' />
           </div>
-          <Divider />
-        </React.Fragment>
-      ))}
+        }
+      >
+        <Epicodes id={podcast.id} author={podcast.author} />
+      </Suspense>
     </>
   )
 }
