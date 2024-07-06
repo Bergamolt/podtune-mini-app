@@ -21,12 +21,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <AppRoot className='root overflow-y-auto'>
-          <TelegramProvider>
-            {children}
-            <Player />
-          </TelegramProvider>
-        </AppRoot>
+        <TelegramProvider>
+          <AppRoot className='root overflow-y-auto'>{children}</AppRoot>
+          <Player />
+        </TelegramProvider>
       </body>
     </html>
   )

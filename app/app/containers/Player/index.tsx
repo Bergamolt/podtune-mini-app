@@ -22,7 +22,7 @@ export function Player() {
   }
 
   return (
-    <FixedLayout vertical='bottom' className='player !absolute'>
+    // <FixedLayout vertical='bottom' className='player !absolute'>
       <AudioPlayer
         ref={playerRef}
         src={episode.url}
@@ -30,10 +30,10 @@ export function Player() {
         onListen={(e) => {
           // const position = e.timeStamp * 1000
         }}
-        className='bg-[var(--tgui--plain\_background)] shadow-none'
+        className='bg-[var(--tg--plain\_background)] shadow-none player'
         customVolumeControls={[]}
         customAdditionalControls={[]}
       />
-    </FixedLayout>
+    // </FixedLayout>
   )
 }

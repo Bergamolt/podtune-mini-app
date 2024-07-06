@@ -10,6 +10,7 @@
 html,
 body {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: var(--tg-viewport-stable-height);
 }
@@ -24,8 +25,9 @@ body:has(.player) {
   width: 100%;
   height: 100%;
   max-height: calc(var(--tg-viewport-stable-height) - var(--player-height));
+  /* max-height: var(--tg-viewport-stable-height); */
 }
 
 .player {
-  top: calc(var(--tg-viewport-stable-height) - var(--player-height)) !important;
+  /* top: calc(var(--tg-viewport-stable-height) - var(--player-height)) !important; */
 }
