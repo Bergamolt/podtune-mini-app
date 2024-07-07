@@ -26,7 +26,13 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
 
   useEffect(() => {
-    const app = (window as any).Telegram?.WebApp as TelegramWebApps.WebApp
+    if (typeof window === 'undefined') {
+      return undefined
+    }
+
+    // @ts-ignore
+    const app = window.Telegram.WebApp
+
     if (app) {
       app.ready()
       setWebApp(app)

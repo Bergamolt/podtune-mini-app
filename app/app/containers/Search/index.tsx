@@ -15,6 +15,10 @@ export function Search() {
   }
 
   useEffect(() => {
+    if (typeof document === 'undefined') {
+      return undefined
+    }
+
     const input = document.querySelector('input')
 
     if (input) {

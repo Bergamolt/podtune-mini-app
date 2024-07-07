@@ -138,11 +138,22 @@ export const podcastIndexApi = (key, secret, userAgent) => {
      * Searches for podcasts by term.
      * @param {string} q - The search query.
      * @param {string} [val] - Additional value parameter.
+     * @param {number} [max=100] - Maximum number of results.
+     * @param {boolean} [aponly] - Whether to search for episodes only.
      * @param {boolean} [clean] - Whether to clean the results.
+     * @param {boolean} [similar] - Whether to include similar results.
      * @param {boolean} [fullText] - Whether to include full text.
      * @returns {Promise<Object>} - The search results.
      */
-    searchByTerm: async (q, val = '', clean = false, fullText = false) => {
+    searchByTerm: async (
+      q,
+      val = '',
+      max = 100,
+      aponly = true,
+      clean = false,
+      similar = true,
+      fullText = false
+    ) => {
       const queries = { q }
       if (val !== '') {
         queries.val = val
@@ -153,6 +164,19 @@ export const podcastIndexApi = (key, secret, userAgent) => {
       if (fullText) {
         queries.fullText = ''
       }
+
+      if (max) {
+        queries.max = max
+      }
+
+      if (aponly) {
+        queries.aponly = aponly
+      }
+
+      if (similar) {
+        queries.similar = similar
+      }
+
       return custom(PATH_SEARCH_BY_TERM, queries)
     },
 

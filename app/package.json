@@ -11,10 +11,10 @@
   "dependencies": {
     "@telegram-apps/telegram-ui": "^2.1.5",
     "js-sha1": "^0.7.0",
-    "next": "14.2.4",
+    "next": "^15.0.0-canary.57",
     "querystring": "^0.2.1",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^19.0.0-rc.0",
+    "react-dom": "^19.0.0-rc.0",
     "react-h5-audio-player": "^3.9.3",
     "react-icons": "^5.2.1",
     "react-modern-audio-player": "^1.4.0-rc.2",

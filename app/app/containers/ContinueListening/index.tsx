@@ -28,8 +28,6 @@ export function ContinueListening() {
     return null
   }
 
-  console.log(episodes)
-
   return (
     <section className='p-4 pb-0 w-full'>
       <Headline weight='2'>Continue listening</Headline>
