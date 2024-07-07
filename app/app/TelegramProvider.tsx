@@ -69,9 +69,9 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
       <Script
         src='https://telegram.org/js/telegram-web-app.js'
         strategy='beforeInteractive'
-        onReady={() => {
+        onLoad={() => {
           // @ts-ignore
-          setWebApp(window.Telegram.WebApp)
+          setWebApp(() => window.Telegram?.WebApp)
         }}
       />
       {children}
