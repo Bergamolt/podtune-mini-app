@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { TelegramProvider } from './TelegramProvider'
 import { AppRoot } from '@telegram-apps/telegram-ui'
 import '@telegram-apps/telegram-ui/dist/styles.css'
 import './globals.css'
 import { Player } from './containers/Player'
 import ScrollLock from './ScrollLock'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Gramcast: Podcast Player',
@@ -21,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body>
         <AppRoot className='flex flex-col h-full'>
           <TelegramProvider>
             <main className='root overflow-y-auto'>{children}</main>

@@ -35,7 +35,6 @@ export function Search() {
       value={query}
       onChange={onChange}
       placeholder='Search for podcasts'
-      className='w-full'
       before={<IoSearch />}
     />
   )
