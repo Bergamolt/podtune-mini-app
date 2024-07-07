@@ -5,7 +5,7 @@ export async function Shows() {
   const podcasts = await getTopShows()
 
   return podcasts.map((podcast) => (
-    <Link key={podcast.id} href={`/podcast/${podcast.id}`}>
+    <Link key={podcast.itunesId} href={`/podcast/${podcast.itunesId}`}>
       <img
         src={podcast.image}
         alt={podcast.title}

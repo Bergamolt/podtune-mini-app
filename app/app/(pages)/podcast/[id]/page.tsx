@@ -27,7 +27,7 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
             {podcast.author}
           </Caption>
           <Favorite
-            id={podcast.id}
+            id={podcast.itunesId}
             title={podcast.title}
             image={podcast.image}
             author={podcast.author}

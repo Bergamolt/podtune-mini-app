@@ -6,9 +6,13 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { IoSearch } from 'react-icons/io5'
 
-export function Search() {
+type SearchProps = {
+  initialQuery?: string
+}
+
+export function Search({ initialQuery = '' }: SearchProps) {
+  const [query, setQuery] = useState(initialQuery)
   const router = useRouter()
-  const [query, setQuery] = useState('')
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value)
