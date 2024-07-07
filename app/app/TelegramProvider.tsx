@@ -26,14 +26,19 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (!webApp) {
+    if (typeof window === 'undefined') {
       return undefined
     }
 
-    if (!webApp.isExpanded) {
-      webApp.expand()
+    // @ts-ignore
+    const app = window.Telegram.WebApp
+
+    if (app) {
+      if (!app.isExpanded) {
+        app.expand()
+      }
     }
-  }, [webApp])
+  }, [])
 
   useEffect(() => {
     if (!webApp) {
@@ -69,9 +74,9 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
       <Script
         src='https://telegram.org/js/telegram-web-app.js'
         strategy='beforeInteractive'
-        onLoad={() => {
+        onReady={() => {
           // @ts-ignore
-          setWebApp(() => window.Telegram?.WebApp)
+          setWebApp(window.Telegram.WebApp)
         }}
       />
       {children}
