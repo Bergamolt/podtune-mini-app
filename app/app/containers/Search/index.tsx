@@ -35,7 +35,7 @@ export function Search({ initialQuery = '' }: SearchProps) {
   })
 
   return (
-    <div className='p-4'>
+    <div className='px-4'>
       <Input
         value={query}
         onChange={onChange}
