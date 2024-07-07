@@ -8,9 +8,5 @@ type TelegramUIProps = {
 }
 
 export function TelegramUI({ children }: TelegramUIProps) {
-  return (
-    <div>
-      <AppRoot>{children}</AppRoot>
-    </div>
-  )
+  return <AppRoot className='flex flex-col h-full'>{children}</AppRoot>
 }

@@ -35,11 +35,13 @@ export function Search({ initialQuery = '' }: SearchProps) {
   })
 
   return (
-    <Input
-      value={query}
-      onChange={onChange}
-      placeholder='Search for podcasts'
-      before={<IoSearch />}
-    />
+    <div className='p-4'>
+      <Input
+        value={query}
+        onChange={onChange}
+        placeholder='Search for podcasts'
+        before={<IoSearch />}
+      />
+    </div>
   )
 }
