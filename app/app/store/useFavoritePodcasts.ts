@@ -31,7 +31,7 @@ export const useFavoritePodcasts = create(
     {
       name: 'favorite-podcasts',
       // @ts-ignore
-      storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
+      // storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
     }
   )
 )

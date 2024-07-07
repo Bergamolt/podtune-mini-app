@@ -36,7 +36,7 @@ export const useContinueListening = create(
     {
       name: 'continue-listening',
       // @ts-ignore
-      storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
+      // storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
     }
   )
 )

@@ -11,6 +11,9 @@ import {
   ReactNode,
 } from 'react'
 import { TelegramWebApps } from 'telegram-webapps'
+import { useFavoritePodcasts } from './store/useFavoritePodcasts'
+import { useContinueListening } from './store/useContinueListening'
+import { useListeningEpisode } from './store/useListeningEpisode'
 
 export interface ITelegramContext {
   webApp?: TelegramWebApps.WebApp
@@ -36,6 +39,16 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
     if (app) {
       app.ready()
       setWebApp(app)
+      // init persist middleware
+      useFavoritePodcasts.persist.setOptions({
+        storage: app.CloudStorage,
+      })
+      useListeningEpisode.persist.setOptions({
+        storage: app.CloudStorage,
+      })
+      useContinueListening.persist.setOptions({
+        storage: app.CloudStorage,
+      })
 
       if (!app.isExpanded) {
         app.expand()
