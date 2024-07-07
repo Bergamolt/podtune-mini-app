@@ -34,6 +34,9 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
     const app = window.Telegram.WebApp
 
     if (app) {
+      app.ready()
+      setWebApp(app)
+
       if (!app.isExpanded) {
         app.expand()
       }
@@ -74,10 +77,6 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
       <Script
         src='https://telegram.org/js/telegram-web-app.js'
         strategy='beforeInteractive'
-        onReady={() => {
-          // @ts-ignore
-          setWebApp(window.Telegram.WebApp)
-        }}
       />
       {children}
     </TelegramContext.Provider>
