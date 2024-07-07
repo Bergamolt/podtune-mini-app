@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>
+      <body data-dev={process.env.NODE_ENV === 'development'}>
         <AppRoot className='flex flex-col h-full'>
           <TelegramProvider>
             <main className='root overflow-y-auto'>{children}</main>
