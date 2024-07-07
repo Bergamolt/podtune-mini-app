@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { Caption, Headline, Text } from '@telegram-apps/telegram-ui'
 import {
   EpisodeContinue,

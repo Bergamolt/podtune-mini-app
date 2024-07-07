@@ -32,7 +32,7 @@ export function Favorites() {
 
       <div className='grid grid-cols-3 gap-2 w-full max-w-screen-lg mx-auto mt-4'>
         {favorites.map((podcast) => (
-          <Link key={podcast.id} href={`/podcast/${podcast.id}`}>
+          <Link key={podcast.id} href={`/podcast/${podcast.id}`} scroll={false}>
             <img
               src={podcast.image}
               alt={podcast.title}
