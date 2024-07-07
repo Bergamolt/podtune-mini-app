@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { createJSONStorage, persist } from 'zustand/middleware'
 import { Episode } from './useListeningEpisode'
 
 export type EpisodeContinue = Episode & {
@@ -35,7 +35,8 @@ export const useContinueListening = create(
     }),
     {
       name: 'continue-listening',
-
+      // @ts-ignore
+      storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
     }
   )
 )

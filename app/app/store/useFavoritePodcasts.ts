@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 export type FavoritePodcast = {
   id: string
@@ -30,6 +30,8 @@ export const useFavoritePodcasts = create(
     }),
     {
       name: 'favorite-podcasts',
+      // @ts-ignore
+      storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
     }
   )
 )

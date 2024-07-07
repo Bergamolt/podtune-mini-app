@@ -22,7 +22,7 @@ body:has(.player) {
 }
 
 [data-dev="true"] {
-  --tg-theme-accent-text-color: #6ab2f2;
+  /* --tg-theme-accent-text-color: #6ab2f2;
   --tg-theme-bg-color: #17212b;
   --tg-theme-button-color: #5288c1;
   --tg-theme-button-text-color: #ffffff;
@@ -34,7 +34,7 @@ body:has(.player) {
   --tg-theme-section-bg-color: #17212b;
   --tg-theme-section-header-text-color: #6ab3f3;
   --tg-theme-subtitle-text-color: #708499;
-  --tg-theme-text-color: #f5f5f5;
+  --tg-theme-text-color: #f5f5f5; */
 }
 
 *::-webkit-scrollbar {

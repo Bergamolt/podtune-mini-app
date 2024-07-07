@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TelegramProvider } from './TelegramProvider'
 import { AppRoot } from '@telegram-apps/telegram-ui'
+import { Analytics } from '@vercel/analytics/react'
 import '@telegram-apps/telegram-ui/dist/styles.css'
 import './globals.css'
 import { Player } from './containers/Player'
@@ -19,13 +20,15 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body data-dev={process.env.NODE_ENV === 'development'}>
-        <AppRoot className='flex flex-col h-full'>
-          <TelegramProvider>
+        <TelegramProvider>
+          <AppRoot className='flex flex-col h-full'>
             <main className='root overflow-y-auto'>{children}</main>
             <Player />
-          </TelegramProvider>
-        </AppRoot>
+          </AppRoot>
+        </TelegramProvider>
         <ScrollLock />
+
+        <Analytics debug={process.env.NODE_ENV === 'development'} />
       </body>
     </html>
   )
