@@ -35,6 +35,7 @@ export const useContinueListening = create(
     }),
     {
       name: 'continue-listening',
+      skipHydration: true,
       // @ts-ignore
       // storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
     }

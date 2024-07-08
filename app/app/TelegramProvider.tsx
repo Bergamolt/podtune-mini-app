@@ -50,6 +50,11 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
         storage: app.CloudStorage,
       })
 
+      // hidrate store
+      useFavoritePodcasts.persist.rehydrate()
+      useListeningEpisode.persist.rehydrate()
+      useContinueListening.persist.rehydrate()
+
       if (!app.isExpanded) {
         app.expand()
       }

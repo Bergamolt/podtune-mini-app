@@ -37,6 +37,7 @@ export const useListeningEpisode = create(
     }),
     {
       name: 'listening-episode',
+      skipHydration: true
        // @ts-ignore
       //  storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
     }
