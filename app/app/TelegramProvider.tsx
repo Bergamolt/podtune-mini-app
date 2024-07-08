@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
-import Script from 'next/script'
+// import Script from 'next/script'
 import {
   createContext,
   useContext,
@@ -11,9 +11,6 @@ import {
   ReactNode,
 } from 'react'
 import { TelegramWebApps } from 'telegram-webapps'
-import { useFavoritePodcasts } from './store/useFavoritePodcasts'
-import { useContinueListening } from './store/useContinueListening'
-import { useListeningEpisode } from './store/useListeningEpisode'
 
 export interface ITelegramContext {
   webApp?: TelegramWebApps.WebApp
@@ -39,21 +36,6 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
     if (app) {
       app.ready()
       setWebApp(app)
-      // init persist middleware
-      useFavoritePodcasts.persist.setOptions({
-        storage: app.CloudStorage,
-      })
-      useListeningEpisode.persist.setOptions({
-        storage: app.CloudStorage,
-      })
-      useContinueListening.persist.setOptions({
-        storage: app.CloudStorage,
-      })
-
-      // hidrate store
-      useFavoritePodcasts.persist.rehydrate()
-      useListeningEpisode.persist.rehydrate()
-      useContinueListening.persist.rehydrate()
 
       if (!app.isExpanded) {
         app.expand()
@@ -92,10 +74,10 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
     // @ts-ignore
     <TelegramContext.Provider value={value}>
       {/* Make sure to include script tag with "beforeInteractive" strategy to pre-load web-app script */}
-      <Script
+      {/* <Script
         src='https://telegram.org/js/telegram-web-app.js'
         strategy='beforeInteractive'
-      />
+      /> */}
       {children}
     </TelegramContext.Provider>
   )

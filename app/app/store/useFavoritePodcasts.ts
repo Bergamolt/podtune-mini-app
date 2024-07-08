@@ -1,5 +1,6 @@
+import { TelegramWebApps } from 'telegram-webapps'
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage, StateStorage } from 'zustand/middleware'
 
 export type FavoritePodcast = {
   id: string
@@ -30,9 +31,36 @@ export const useFavoritePodcasts = create(
     }),
     {
       name: 'favorite-podcasts',
-      skipHydration: true,
-      // @ts-ignore
-      // storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
+      storage: createJSONStorage(() => {
+        const telegramStorage = (): StateStorage => {
+          return {
+            getItem: (key: string) => {
+              // @ts-ignore
+              return window.Telegram?.WebApp?.CloudStorage.getItem(
+                key,
+                () => {}
+              )
+            },
+            setItem: (key: string, value: string) => {
+              // @ts-ignore
+              return window.Telegram?.WebApp?.CloudStorage.setItem(
+                key,
+                value,
+                () => {}
+              )
+            },
+            removeItem: (key: string) => {
+              // @ts-ignore
+              return window.Telegram?.WebApp?.CloudStorage.removeItem(
+                key,
+                () => {}
+              )
+            },
+          }
+        }
+
+        return telegramStorage()
+      }),
     }
   )
 )

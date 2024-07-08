@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { createJSONStorage, persist } from 'zustand/middleware'
+import { StateStorage, createJSONStorage, persist } from 'zustand/middleware'
 import { Episode } from './useListeningEpisode'
 
 export type EpisodeContinue = Episode & {
@@ -35,9 +35,36 @@ export const useContinueListening = create(
     }),
     {
       name: 'continue-listening',
-      skipHydration: true,
-      // @ts-ignore
-      // storage: createJSONStorage(() => window.Telegram?.WebApp?.CloudStorage),
+      storage: createJSONStorage(() => {
+        const telegramStorage = (): StateStorage => {
+          return {
+            getItem: (key: string) => {
+              // @ts-ignore
+              return window.Telegram?.WebApp?.CloudStorage.getItem(
+                key,
+                () => {}
+              )
+            },
+            setItem: (key: string, value: string) => {
+              // @ts-ignore
+              return window.Telegram?.WebApp?.CloudStorage.setItem(
+                key,
+                value,
+                () => {}
+              )
+            },
+            removeItem: (key: string) => {
+              // @ts-ignore
+              return window.Telegram?.WebApp?.CloudStorage.removeItem(
+                key,
+                () => {}
+              )
+            },
+          }
+        }
+
+        return telegramStorage()
+      }),
     }
   )
 )
