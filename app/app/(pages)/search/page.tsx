@@ -18,7 +18,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className='w-full'>
       <Search initialQuery={searchParams.query} />
 
-      <div className='px-4 pb-4'>
+      <div className='p-4'>
         {data.feeds.length > 0 && (
           <div className='flex flex-row'>
             <Headline className='text-2xl font-bold'>

@@ -37,36 +37,6 @@ export const useListeningEpisode = create(
     }),
     {
       name: 'listening-episode',
-      storage: createJSONStorage(() => {
-        const telegramStorage = (): StateStorage => {
-          return {
-            getItem: (key: string) => {
-              // @ts-ignore
-              return window.Telegram?.WebApp?.CloudStorage.getItem(
-                key,
-                () => {}
-              )
-            },
-            setItem: (key: string, value: string) => {
-              // @ts-ignore
-              return window.Telegram?.WebApp?.CloudStorage.setItem(
-                key,
-                value,
-                () => {}
-              )
-            },
-            removeItem: (key: string) => {
-              // @ts-ignore
-              return window.Telegram?.WebApp?.CloudStorage.removeItem(
-                key,
-                () => {}
-              )
-            },
-          }
-        }
-
-        return telegramStorage()
-      }),
     }
   )
 )

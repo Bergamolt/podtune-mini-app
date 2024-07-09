@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
-// import Script from 'next/script'
+import Script from 'next/script'
 import {
   createContext,
   useContext,
@@ -11,6 +11,16 @@ import {
   ReactNode,
 } from 'react'
 import { TelegramWebApps } from 'telegram-webapps'
+import { useFavoritePodcasts } from './store/useFavoritePodcasts'
+import { StateStorage, createJSONStorage } from 'zustand/middleware'
+
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: TelegramWebApps.WebApp
+    }
+  }
+}
 
 export interface ITelegramContext {
   webApp?: TelegramWebApps.WebApp
@@ -26,22 +36,10 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return undefined
+    if (webApp) {
+      useFavoritePodcasts.persist.rehydrate()
     }
-
-    // @ts-ignore
-    const app = window.Telegram.WebApp
-
-    if (app) {
-      app.ready()
-      setWebApp(app)
-
-      if (!app.isExpanded) {
-        app.expand()
-      }
-    }
-  }, [])
+  }, [webApp])
 
   useEffect(() => {
     if (!webApp) {
@@ -74,10 +72,21 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
     // @ts-ignore
     <TelegramContext.Provider value={value}>
       {/* Make sure to include script tag with "beforeInteractive" strategy to pre-load web-app script */}
-      {/* <Script
+      <Script
         src='https://telegram.org/js/telegram-web-app.js'
-        strategy='beforeInteractive'
-      /> */}
+        onLoad={() => {
+          if (typeof window !== 'undefined') {
+            const app = window.Telegram.WebApp
+
+            app.ready()
+            setWebApp(app)
+
+            if (!app.isExpanded) {
+              app.expand()
+            }
+          }
+        }}
+      />
       {children}
     </TelegramContext.Provider>
   )
