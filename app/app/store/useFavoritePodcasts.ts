@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { persist, createJSONStorage, StateStorage } from 'zustand/middleware'
 
 export type FavoritePodcast = {
   id: string
@@ -32,16 +31,17 @@ export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
     )
   },
   loadFavorites: async () => {
-    const data = await window.Telegram.WebApp.CloudStorage.getItem(
+    await window.Telegram.WebApp.CloudStorage.getItem(
       'favorite-podcasts',
-      (error: Error) => {
-        window.Telegram.WebApp.showAlert(error.message)
+      (error: Error | null, value: string) => {
+        if (error?.message) {
+          return window.Telegram.WebApp.showAlert(error.message)
+        }
+
+        if (value) {
+          set({ favorites: JSON.parse(value) })
+        }
       }
     )
-
-    if (data) {
-      // @ts-ignore
-      set({ favorites: data })
-    }
   },
 }))
