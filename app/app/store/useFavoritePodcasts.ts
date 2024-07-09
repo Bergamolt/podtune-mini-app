@@ -35,12 +35,13 @@ export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
       'favorite-podcasts',
       (error: Error | null, value: string) => {
         if (error?.message) {
-          return window.Telegram.WebApp.showAlert(error.message)
+          window.Telegram.WebApp.showAlert(error.message)
         }
 
         if (value) {
-          // set({ favorites: JSON.parse(value) ?? [] })
-          window.Telegram.WebApp.showAlert(value)
+          set({
+            favorites: [...get().favorites, ...JSON.parse(value)],
+          })
         }
       }
     )
