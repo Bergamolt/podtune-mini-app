@@ -1,21 +1,14 @@
-// useStore.ts
-import { useState, useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { TelegramContext } from '../TelegramProvider'
+import { useFavoritePodcasts } from './useFavoritePodcasts'
 
-const useStore = <T, F>(
-  store: (callback: (state: T) => unknown) => unknown,
-  callback: (state: T) => F
-) => {
+export const useInitStore = () => {
   const { webApp } = useContext(TelegramContext)
-  console.log(webApp)
-  const result = store(callback) as F
-  const [data, setData] = useState<F>()
+  const loadFavorites = useFavoritePodcasts((state) => state.loadFavorites)
 
   useEffect(() => {
-    setData(result)
-  }, [result])
-
-  return data
+    if (webApp) {
+      loadFavorites()
+    }
+  }, [webApp, loadFavorites])
 }
-
-export default useStore

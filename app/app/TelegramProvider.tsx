@@ -11,8 +11,6 @@ import {
   ReactNode,
 } from 'react'
 import { TelegramWebApps } from 'telegram-webapps'
-import { useFavoritePodcasts } from './store/useFavoritePodcasts'
-import { StateStorage, createJSONStorage } from 'zustand/middleware'
 
 declare global {
   interface Window {
@@ -34,12 +32,6 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
   const [webApp, setWebApp] = useState<TelegramWebApps.WebApp | null>(null)
   const pathname = usePathname()
   const router = useRouter()
-
-  useEffect(() => {
-    if (webApp) {
-      useFavoritePodcasts.persist.rehydrate()
-    }
-  }, [webApp])
 
   useEffect(() => {
     if (!webApp) {
@@ -79,11 +71,9 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
             const app = window.Telegram.WebApp
 
             app.ready()
+            app.expand()
+            app.showAlert('Hello from Telegram Web App!')
             setWebApp(app)
-
-            if (!app.isExpanded) {
-              app.expand()
-            }
           }
         }}
       />
