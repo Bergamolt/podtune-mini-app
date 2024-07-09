@@ -72,7 +72,6 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
 
             app.ready()
             app.expand()
-            app.showAlert('Hello from Telegram Web App!')
             setWebApp(app)
           }
         }}
