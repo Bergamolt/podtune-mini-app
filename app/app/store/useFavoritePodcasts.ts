@@ -31,17 +31,17 @@ export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
     )
   },
   loadFavorites: async () => {
-    // await window.Telegram.WebApp.CloudStorage.getItem(
-    //   'favorite-podcasts',
-    //   (error: Error | null, value: string) => {
-    //     if (error?.message) {
-    //       return window.Telegram.WebApp.showAlert(error.message)
-    //     }
+    window?.Telegram.WebApp.CloudStorage.getItem(
+      'favorite-podcasts',
+      (error: Error | null, value: string) => {
+        if (error?.message) {
+          return window.Telegram.WebApp.showAlert(error.message)
+        }
 
-    //     if (value) {
-    //       set({ favorites: JSON.parse(value) })
-    //     }
-    //   }
-    // )
+        if (value) {
+          set({ favorites: JSON.parse(value) ?? [] })
+        }
+      }
+    )
   },
 }))
