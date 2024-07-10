@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { StateStorage, createJSONStorage, persist } from 'zustand/middleware'
 import { Episode } from './useListeningEpisode'
 
 export type EpisodeContinue = Episode & {
@@ -10,31 +9,46 @@ export type EpisodeContinue = Episode & {
 type ContinueListening = {
   episodes: EpisodeContinue[]
   setEpisodes: (episode: EpisodeContinue) => void
+  loadEpisodes: () => void
 }
 
-export const useContinueListening = create(
-  persist<ContinueListening>(
-    (set, get) => ({
-      episodes: [],
-      setEpisodes: (episode: EpisodeContinue) => {
-        const episodes = get().episodes
-        const added = episodes.find((e) => e.url === episode.url)
+export const useContinueListening = create<ContinueListening>((set, get) => ({
+  episodes: [],
+  setEpisodes: (episode: EpisodeContinue) => {
+    const episodes = get().episodes
+    const added = episodes.find((e) => e.url === episode.url)
 
-        if (!added) {
-          set({
-            episodes: [episode, ...episodes],
-          })
-        } else {
-          added.position = episode.position
+    if (!added) {
+      set({
+        episodes: [episode, ...episodes],
+      })
+    } else {
+      added.position = episode.position
 
+      set({
+        episodes: [added, ...episodes.filter((e) => e.url !== episode.url)],
+      })
+    }
+
+    window.Telegram.WebApp.CloudStorage.setItem(
+      'continue-listening',
+      JSON.stringify(get().episodes)
+    )
+  },
+  loadEpisodes: async () => {
+    window?.Telegram.WebApp.CloudStorage.getItem(
+      'continue-listening',
+      (error: Error | null, value: string) => {
+        if (error?.message) {
+          window.Telegram.WebApp.showAlert(error.message)
+        }
+
+        if (value) {
           set({
-            episodes: [added, ...episodes.filter((e) => e.url !== episode.url)],
+            episodes: JSON.parse(value),
           })
         }
-      },
-    }),
-    {
-      name: 'continue-listening',
-    }
-  )
-)
+      }
+    )
+  },
+}))
