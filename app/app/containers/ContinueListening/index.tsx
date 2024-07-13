@@ -32,19 +32,19 @@ export function ContinueListening() {
       <Headline weight='2'>Continue listening</Headline>
 
       <div className='flex gap-2 w-full mx-auto mt-4 overflow-x-auto'>
-        {episodes.map((epicode) => (
+        {episodes.map((episode) => (
           <div
-            key={epicode.url}
-            className='flex min-w-64 max-w-64 h-20 p-2 bg-[var(--tg-theme-secondary-bg-color)] rounded-lg items-center overflow-hidden'
-            onClick={setActiveEpisode(epicode)}
+            key={episode.url}
+            className='flex min-w-64 max-w-64 h-20 p-2 bg-[var(--tg-theme-section-bg-color)] rounded-lg items-center overflow-hidden'
+            onClick={setActiveEpisode(episode)}
           >
-            <img src={epicode.image} className='object-cover w-14 h-14' />
+            <img src={episode.image} className='object-cover w-14 h-14' />
             <div className='ml-2'>
-              <Caption weight='2'>{charLimit(epicode.title, 40)}</Caption>
+              <Caption weight='2'>{charLimit(episode.title, 40)}</Caption>
               <div>
                 <Caption>
                   {Math.floor(
-                    (epicode.duration - epicode.position / 1000) / 60
+                    (episode.duration - episode.position / 1000) / 60
                   )}{' '}
                   min left
                 </Caption>
