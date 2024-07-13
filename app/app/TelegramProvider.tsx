@@ -70,9 +70,9 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
           if (typeof window !== 'undefined') {
             const app = window.Telegram.WebApp
 
-            app.ready()
-            app.expand()
             setWebApp(app)
+            app.expand()
+            app.ready()
           }
         }}
       />

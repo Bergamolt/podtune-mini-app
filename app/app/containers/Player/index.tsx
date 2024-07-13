@@ -24,7 +24,8 @@ export function Player() {
       playerRef.current.audio.current &&
       isReady
     ) {
-      const currentTime = episode.position === 0 ? 0 : episode.position / 1000
+      const currentTime = episode.position
+      
       playerRef.current.audio.current.currentTime = currentTime
       playerRef.current.audio.current.play()
     }
@@ -53,7 +54,7 @@ export function Player() {
           author: episode.author,
           image: episode.image,
           url: episode.url,
-          position: e.timeStamp,
+          position: e.timeStamp / 1000,
           duration: episode.duration,
         })
       }}
