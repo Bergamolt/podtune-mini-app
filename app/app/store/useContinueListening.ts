@@ -45,7 +45,7 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
 
         if (value) {
           set({
-            episodes: JSON.parse(value),
+            episodes: [...get().episodes, ...JSON.parse(value)],
           })
         }
       }
