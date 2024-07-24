@@ -12,8 +12,11 @@ export function SearchButton() {
   }
 
   return (
-    <button onClick={handleClick} className='ml-auto w-auto max-w-[auto] px-4'>
-      <IoSearch size={24} />
+    <button
+      onClick={handleClick}
+      className='inline-flex items-center ml-auto w-auto  px-4'
+    >
+      <IoSearch size={18} />
     </button>
   )
 }
