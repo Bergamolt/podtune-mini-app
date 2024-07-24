@@ -7,7 +7,7 @@ import { SayHi } from '@/app/components/SayHi'
 export default function Home() {
   return (
     <>
-      <div className='flex'>
+      <div className='flex pb-4'>
         <SayHi />
         <SearchButton />
       </div>

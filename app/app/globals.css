@@ -52,11 +52,12 @@ body:has(.player) {
 
 .player {
   /* top: calc(var(--tg-viewport-stable-height) - var(--player-height)) !important; */
-} 
+}
 
 /* Overrides */
 
-body .tgui-8ca550c2fc85eff5 {
+body .tgui-8ca550c2fc85eff5,
+body .tgui-7707c5d942b7b9af .tgui-0f5050defacbf813 {
   padding: 0 !important;
   background: var(--tg-theme-section-bg-color) !important;
 }
