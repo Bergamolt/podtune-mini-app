@@ -311,7 +311,7 @@ export const podcastIndexApi = (key, secret, userAgent) => {
     episodesByFeedId: async (
       feedId,
       since = null,
-      max = 10,
+      max = 1000,
       fullText = false
     ) => {
       const queries = { id: feedId, since, max }
