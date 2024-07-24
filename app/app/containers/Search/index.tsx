@@ -36,7 +36,7 @@ export function Search({ initialQuery = '', autoFocus }: SearchProps) {
   })
 
   return (
-    <div className='px-4'>
+    <div className='px-4 bg-[var(--tg-theme-section-bg-color)]'>
       <Input
         value={query}
         onChange={onChange}

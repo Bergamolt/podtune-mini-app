@@ -1,12 +1,12 @@
 import { TopShows } from '@/app/containers/TopShows'
 import { Favorites } from '@/app/containers/Favorites'
 import { ContinueListening } from './containers/ContinueListening'
-import { Search } from './containers/Search'
+import { SearchButton } from './components/SearchButton'
 
 export default function Home() {
   return (
     <>
-      <Search />
+      <SearchButton />
       <ContinueListening />
       <Favorites />
       <TopShows />

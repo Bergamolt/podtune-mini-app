@@ -20,7 +20,7 @@ export function Favorites() {
 
       {!favorites.length && (
         <div className='flex flex-col'>
-          <Text className='text-center !my-4'>
+          <Text className='text-center !my-6'>
             Folow some podcasts and they&apos;ll appear <br /> here for easy
             access!
           </Text>
