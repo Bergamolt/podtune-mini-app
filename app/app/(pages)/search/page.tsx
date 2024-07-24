@@ -16,7 +16,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <div className='w-full'>
-      <Search initialQuery={searchParams.query} />
+      <Search initialQuery={searchParams.query} autoFocus />
 
       <div className='p-4'>
         {data.feeds.length > 0 && (

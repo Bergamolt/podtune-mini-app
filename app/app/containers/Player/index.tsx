@@ -25,14 +25,13 @@ export function Player() {
       isReady
     ) {
       const currentTime = episode.position
-      
+
       playerRef.current.audio.current.currentTime = currentTime
       playerRef.current.audio.current.play()
     }
 
     return () => {
       setIsReady(false)
-      playerRef.current?.audio.current?.pause()
     }
   }, [episode, isReady, playerRef])
 
@@ -48,15 +47,17 @@ export function Player() {
       onLoadedData={() => {
         setIsReady(true)
       }}
-      onListen={(e) => {
-        setEpisodes({
-          title: episode.title,
-          author: episode.author,
-          image: episode.image,
-          url: episode.url,
-          position: e.timeStamp / 1000,
-          duration: episode.duration,
-        })
+      onListen={() => {
+        if (playerRef.current?.audio.current?.currentTime) {
+          setEpisodes({
+            title: episode.title,
+            author: episode.author,
+            image: episode.image,
+            url: episode.url,
+            position: playerRef.current?.audio.current?.currentTime,
+            duration: playerRef.current?.audio.current?.duration,
+          })
+        }
       }}
       className='bg-[var(--tg-theme-bg-color)] shadow-none player'
       autoPlay={false}

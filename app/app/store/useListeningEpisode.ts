@@ -29,23 +29,31 @@ export const useListeningEpisode = create<ListeningEpisode>((set) => ({
       set({ episode: isAdded })
     }
 
-    window.Telegram.WebApp.CloudStorage.setItem(
-      'listening-episode',
-      JSON.stringify(episode)
-    )
+    try {
+      window.Telegram.WebApp.CloudStorage.setItem(
+        'listening-episode',
+        JSON.stringify(episode)
+      )
+    } catch (error) {
+      console.error(error)
+    }
   },
   loadEpisode: () => {
-    window?.Telegram.WebApp.CloudStorage.getItem(
-      'listening-episode',
-      (error: Error | null, value: string) => {
-        if (error?.message) {
-          window.Telegram.WebApp.showAlert(error.message)
-        }
+    try {
+      window?.Telegram.WebApp.CloudStorage.getItem(
+        'listening-episode',
+        (error: Error | null, value: string) => {
+          if (error?.message) {
+            window.Telegram.WebApp.showAlert(error.message)
+          }
 
-        if (value) {
-          set({ episode: JSON.parse(value) })
+          if (value) {
+            set({ episode: JSON.parse(value) })
+          }
         }
-      }
-    )
+      )
+    } catch (error) {
+      console.error(error)
+    }
   },
 }))

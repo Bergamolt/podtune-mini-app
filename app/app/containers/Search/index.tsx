@@ -8,9 +8,10 @@ import { IoSearch } from 'react-icons/io5'
 
 type SearchProps = {
   initialQuery?: string
+  autoFocus?: boolean
 }
 
-export function Search({ initialQuery = '' }: SearchProps) {
+export function Search({ initialQuery = '', autoFocus }: SearchProps) {
   const [query, setQuery] = useState(initialQuery)
   const router = useRouter()
 
@@ -41,6 +42,7 @@ export function Search({ initialQuery = '' }: SearchProps) {
         onChange={onChange}
         placeholder='Search for podcasts'
         before={<IoSearch />}
+        autoFocus={autoFocus && initialQuery === ''}
       />
     </div>
   )

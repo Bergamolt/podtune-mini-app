@@ -24,31 +24,40 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
       })
     } else {
       added.position = episode.position
+      added.duration = episode.duration
 
       set({
         episodes: [added, ...episodes.filter((e) => e.url !== episode.url)],
       })
     }
 
-    window.Telegram.WebApp.CloudStorage.setItem(
-      'continue-listening',
-      JSON.stringify(get().episodes)
-    )
+    try {
+      window.Telegram.WebApp.CloudStorage.setItem(
+        'continue-listening',
+        JSON.stringify(get().episodes)
+      )
+    } catch (error) {
+      console.error(error)
+    }
   },
   loadEpisodes: async () => {
-    window?.Telegram.WebApp.CloudStorage.getItem(
-      'continue-listening',
-      (error: Error | null, value: string) => {
-        if (error?.message) {
-          window.Telegram.WebApp.showAlert(error.message)
-        }
+    try {
+      window?.Telegram.WebApp.CloudStorage.getItem(
+        'continue-listening',
+        (error: Error | null, value: string) => {
+          if (error?.message) {
+            window.Telegram.WebApp.showAlert(error.message)
+          }
 
-        if (value) {
-          set({
-            episodes: [...get().episodes, ...JSON.parse(value)],
-          })
+          if (value) {
+            set({
+              episodes: [...get().episodes, ...JSON.parse(value)],
+            })
+          }
         }
-      }
-    )
+      )
+    } catch (error) {
+      console.error(error)
+    }
   },
 }))

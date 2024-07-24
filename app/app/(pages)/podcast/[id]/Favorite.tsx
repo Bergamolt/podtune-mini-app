@@ -21,7 +21,7 @@ export function Favorite({ id, title, image, author }: FavoriteProps) {
   }
 
   return (
-    <Button size='s' onClick={handleFavorite} className='w-auto mt-2'>
+    <Button size='s' onClick={handleFavorite} className='w-auto mt-2 !max-w-[60%]'>
       {isFavorite ? 'Following' : 'Follow'}
     </Button>
   )
