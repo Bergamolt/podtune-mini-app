@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { Caption, Title, Divider, Spinner } from '@telegram-apps/telegram-ui'
 import { Favorite } from './components/Favorite'
 import { getPodcastByFeedId } from './utils/getPodcastByFeedId'
-import { Epicodes } from './components/Episodes'
+import { Episodes } from './components/Episodes'
 
 type PodcastPageProps = {
   params: {
@@ -43,7 +43,7 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
           </div>
         }
       >
-        <Epicodes
+        <Episodes
           id={podcast.id}
           author={podcast.author}
           image={podcast.image}

@@ -3,13 +3,13 @@ import { Caption, Text, Divider } from '@telegram-apps/telegram-ui'
 import { podcastIndex } from '@/app/utils/podcastIndex'
 import { Play } from './Play'
 
-type EpicodesProps = {
+type EpisodesProps = {
   id: string
   author: string
   image: string
 }
 
-export async function Epicodes({ id, author, image }: EpicodesProps) {
+export async function Episodes({ id, author, image }: EpisodesProps) {
   const epicodes = await podcastIndex.episodesByFeedId(id)
 
   return epicodes.items.map((episode: any) => (
