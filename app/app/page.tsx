@@ -1,16 +1,18 @@
 import { TopShows } from '@/app/containers/TopShows'
 import { Favorites } from '@/app/containers/Favorites'
-import { ContinueListening } from './containers/ContinueListening'
-import { SearchButton } from '@/app/components/SearchButton'
-import { SayHi } from '@/app/components/SayHi'
+import { ContinueListening } from '@/app/containers/ContinueListening'
+import { Search } from '@/app/containers/Search'
+// import { SearchButton } from '@/app/components/SearchButton'
+// import { SayHi } from '@/app/components/SayHi'
 
 export default function Home() {
   return (
     <>
-      <div className='flex pb-4'>
+      <Search />
+      {/* <div className='flex pb-4'>
         <SayHi />
         <SearchButton />
-      </div>
+      </div> */}
       <ContinueListening />
       <Favorites />
       <TopShows />
