@@ -6,12 +6,15 @@ import H5AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
 import { useListeningEpisode } from '@/app/store/useListeningEpisode'
 import { useContinueListening } from '@/app/store/useContinueListening'
+import { useTelegram } from '@/app/TelegramProvider'
 
 export function Player() {
+  const { webApp } = useTelegram()
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisodes = useContinueListening((state) => state.setEpisodes)
   const [isReady, setIsReady] = useState(false)
   const playerRef = createRef<H5AudioPlayer>()
+  // const timerEpisodePosition = createRef<NodeJS.Timeout>()
 
   useEffect(() => {
     if (episode?.position === undefined) {
@@ -43,10 +46,6 @@ export function Player() {
     <AudioPlayer
       ref={playerRef}
       src={episode.url}
-      onPlay={(e) => console.log('onPlay')}
-      onLoadedData={() => {
-        setIsReady(true)
-      }}
       onListen={() => {
         if (playerRef.current?.audio.current?.currentTime) {
           setEpisodes({
@@ -59,10 +58,13 @@ export function Player() {
           })
         }
       }}
-      className='bg-[var(--tg-theme-bg-color)] shadow-none player'
-      autoPlay={false}
+      onLoadedData={() => setIsReady(true)}
+      onPlay={() => webApp?.enableClosingConfirmation()}
+      onPause={() => webApp?.disableClosingConfirmation()}
       customVolumeControls={[]}
       customAdditionalControls={[]}
+      autoPlay={false}
+      className='bg-[var(--tg-theme-section-bg-color)] shadow-none player'
     />
   )
 }
