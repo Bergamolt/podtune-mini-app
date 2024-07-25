@@ -64,7 +64,7 @@ export function Player() {
       customVolumeControls={[]}
       customAdditionalControls={[]}
       autoPlay={false}
-      className='bg-[var(--tg-theme-section-bg-color)] shadow-none player'
+      className='bg-[var(--tg-theme-bg-color)] shadow-none player'
     />
   )
 }
