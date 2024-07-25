@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 import { Caption, Title, Divider, Spinner } from '@telegram-apps/telegram-ui'
-import { Favorite } from './Favorite'
+import { Favorite } from './components/Favorite'
 import { getPodcastByFeedId } from './utils/getPodcastByFeedId'
-import { Epicodes } from './Episodes'
+import { Epicodes } from './components/Episodes'
 
 type PodcastPageProps = {
   params: {

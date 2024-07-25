@@ -24,7 +24,7 @@ export function Favorites() {
             Folow some podcasts and they&apos;ll appear <br /> here for easy
             access!
           </Text>
-          <Button onClick={goToSearch} className='!w-auto' size='s'>
+          <Button onClick={goToSearch} className='mx-auto' size='s'>
             Find a podcast
           </Button>
         </div>

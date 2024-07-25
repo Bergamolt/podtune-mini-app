@@ -2,7 +2,6 @@
 
 import { useFavoritePodcasts } from '@/app/store/useFavoritePodcasts'
 import { Button } from '@telegram-apps/telegram-ui'
-import { IoHeartOutline, IoHeartSharp } from 'react-icons/io5'
 
 type FavoriteProps = {
   id: string
@@ -21,7 +20,11 @@ export function Favorite({ id, title, image, author }: FavoriteProps) {
   }
 
   return (
-    <Button size='s' onClick={handleFavorite} className='w-auto mt-2 !max-w-[60%]'>
+    <Button
+      size='s'
+      onClick={handleFavorite}
+      className='w-auto mt-2 !max-w-[60%]'
+    >
       {isFavorite ? 'Following' : 'Follow'}
     </Button>
   )

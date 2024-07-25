@@ -24,7 +24,7 @@ export const getTopShows = cache(
     const languages = parseAcceptLanguage(acceptLanguage)
     const language = languages[0]?.lang || 'en-US'
 
-    const data = await podcastIndex.podcastsTrending(15, null, language)
+    const data = await podcastIndex.podcastsTrending(12, null, language)
 
     return data.feeds
   }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Headline } from '@telegram-apps/telegram-ui'
+import { Caption } from '@telegram-apps/telegram-ui'
 import { useTelegram } from '@/app/TelegramProvider'
 
 export function SayHi() {
@@ -8,7 +8,7 @@ export function SayHi() {
 
   return (
     <div className='inline-flex items-center px-4'>
-      <Headline className='mr-2'>Hi, {user?.first_name}!</Headline>
+      <Caption className='mr-2'>Hi, {user?.first_name} 👋</Caption>
     </div>
   )
 }

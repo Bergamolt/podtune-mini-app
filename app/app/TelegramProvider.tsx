@@ -13,6 +13,7 @@ import {
 import { TelegramWebApps } from 'telegram-webapps'
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface Window {
     Telegram: {
       WebApp: TelegramWebApps.WebApp

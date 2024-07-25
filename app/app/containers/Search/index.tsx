@@ -4,7 +4,7 @@ import { ROUTES } from '@/app/constants/routes'
 import { Input } from '@telegram-apps/telegram-ui'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { IoSearch } from 'react-icons/io5'
+// import { IoSearch } from 'react-icons/io5'
 
 type SearchProps = {
   initialQuery?: string
@@ -29,7 +29,7 @@ export function Search({ initialQuery = '', autoFocus }: SearchProps) {
     if (input) {
       input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' && query.trim()) {
-          router.push(ROUTES.SEARCH + '?query=' + query)
+          router.replace(ROUTES.SEARCH + '?query=' + query)
         }
       })
     }
@@ -41,7 +41,7 @@ export function Search({ initialQuery = '', autoFocus }: SearchProps) {
         value={query}
         onChange={onChange}
         placeholder='Search for podcasts'
-        before={<IoSearch />}
+        // before={<IoSearch />}
         autoFocus={autoFocus && initialQuery === ''}
       />
     </div>
