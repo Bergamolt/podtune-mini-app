@@ -13,8 +13,7 @@ body {
   flex-direction: column;
   width: 100%;
   height: var(--tg-viewport-stable-height);
-  /* background-color: var(--tg-theme-bg-color); */
-  background-color: var(--tg-theme-section-bg-color);
+  background-color: var(--tg-theme-bg-color);
   overflow: hidden;
 }
 
@@ -54,6 +53,10 @@ body:has(.player) {
 .skeletonCard {
   @apply flex items-center justify-center bg-gray-300 rounded-md animate-pulse dark:bg-gray-700;
   height: calc((min(1024px, 100vw) - 3rem) / 3);
+}
+
+.player {
+  height: var(--player-height);
 }
 
 /* Overrides */
