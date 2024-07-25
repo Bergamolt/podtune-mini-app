@@ -2,7 +2,7 @@
 
 import { ROUTES } from '@/app/constants/routes'
 import { Input } from '@telegram-apps/telegram-ui'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 // import { IoSearch } from 'react-icons/io5'
 
@@ -14,6 +14,7 @@ type SearchProps = {
 export function Search({ initialQuery = '', autoFocus }: SearchProps) {
   const [query, setQuery] = useState(initialQuery)
   const router = useRouter()
+  const pathname = usePathname()
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value)
@@ -29,7 +30,10 @@ export function Search({ initialQuery = '', autoFocus }: SearchProps) {
     if (input) {
       input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' && query.trim()) {
-          router.replace(ROUTES.SEARCH + '?query=' + query)
+          // If the user is already on the search page, replace the query
+          router[pathname.includes(ROUTES.SEARCH) ? 'replace' : 'push'](
+            ROUTES.SEARCH + '?query=' + query
+          )
         }
       })
     }

@@ -50,14 +50,14 @@ body:has(.player) {
   /* max-height: var(--tg-viewport-stable-height); */
 }
 
-.player {
-  /* top: calc(var(--tg-viewport-stable-height) - var(--player-height)) !important; */
+.skeletonCard {
+  @apply flex items-center justify-center bg-gray-300 rounded-md animate-pulse dark:bg-gray-700;
+  height: calc((min(1024px, 100vw) - 3rem) / 3);
 }
 
 /* Overrides */
 
 body .tgui-8ca550c2fc85eff5,
 body .tgui-7707c5d942b7b9af .tgui-0f5050defacbf813 {
-  padding: 0 !important;
   background: var(--tg-theme-section-bg-color) !important;
 }
