@@ -43,7 +43,11 @@ export default async function PodcastPage({ params }: PodcastPageProps) {
           </div>
         }
       >
-        <Epicodes id={podcast.id} author={podcast.author} />
+        <Epicodes
+          id={podcast.id}
+          author={podcast.author}
+          image={podcast.image}
+        />
       </Suspense>
     </>
   )

@@ -6,9 +6,10 @@ import { Play } from './Play'
 type EpicodesProps = {
   id: string
   author: string
+  image: string
 }
 
-export async function Epicodes({ id, author }: EpicodesProps) {
+export async function Epicodes({ id, author, image }: EpicodesProps) {
   const epicodes = await podcastIndex.episodesByFeedId(id)
 
   return epicodes.items.map((episode: any) => (
@@ -18,7 +19,7 @@ export async function Epicodes({ id, author }: EpicodesProps) {
           author={author}
           title={episode.title}
           url={episode.enclosureUrl}
-          image={episode.image}
+          image={episode.image || image}
           duration={episode.duration}
         />
         <div className='flex flex-col justify-start ml-2'>
