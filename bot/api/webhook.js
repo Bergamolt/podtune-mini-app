@@ -28,7 +28,7 @@ module.exports = async (request, response) => {
 
       if (text === '/start' || text.includes('start tapps')) {
         const message =
-          '👋🏻 Hello! This is first podcast player in Telegram 🎧 You can listen to podcasts without \nleaving the app. \n Just click on the button below to start listening to your favorite podcast 🎙️\n\nOfficial channel: @podtune\nSupport: https://t.me/m/liL26q23YzFi'
+          '👋🏻 Hello! This is first podcast player in Telegram 🎧 You can listen to podcasts without leaving the app. \n Just click on the button below to start listening to your favorite podcast 🎙️\n\n📬 Support: https://t.me/m/liL26q23YzFi'
         await bot.sendMessage(id, message, {
           parse_mode: 'Markdown',
           reply_markup: {
