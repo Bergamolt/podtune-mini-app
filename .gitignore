@@ -2,3 +2,4 @@ app/node_modules
 app/.next
 app/.DS_Store
 .DS_Store
+bot/node_modules

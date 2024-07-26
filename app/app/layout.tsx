@@ -8,8 +8,8 @@ import ScrollLock from './ScrollLock'
 import { TelegramUI } from './TelegramUI'
 
 export const metadata: Metadata = {
-  title: 'Gramcast: Podcast Player',
-  description: 'Gramcast is a podcast player for Telegram Web Apps',
+  title: 'PodTune: Podcast Player',
+  description: 'PodTune is a podcast player for Telegram',
 }
 
 export default function RootLayout({
