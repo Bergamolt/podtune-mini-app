@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers)
 
-  requestHeaders.set('x-geo-country', geo?.country || 'en-US')
+  requestHeaders.set('x-geo-country', geo?.country || 'US')
 
   return NextResponse.next({
     request: {
