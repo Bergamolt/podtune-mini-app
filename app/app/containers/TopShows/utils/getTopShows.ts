@@ -9,7 +9,7 @@ export const getTopShows = async (): Promise<
   const country = headers().get('x-geo-country')
   const lang = getLanguageCode(country)
   console.log('lang', lang, country)
-  let data = await podcastIndex.podcastsTrending(12, null, lang + 2)
+  let data = await podcastIndex.podcastsTrending(12, null, lang)
 
   if (data.feeds.length) {
     return data.feeds
