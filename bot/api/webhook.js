@@ -7,11 +7,12 @@ const TelegramBot = require('node-telegram-bot-api')
 
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN)
 
-bot.setWebHook(`${process.env.BOT_WEBHOOK_DOMAIN}/api/webhook`)
+// bot.setWebHook(`${process.env.BOT_WEBHOOK_DOMAIN}/api/webhook`)
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
 module.exports = async (request, response) => {
+  console.log('Request received')
   try {
     // Retrieve the POST request body that gets sent from Telegram
     const { body } = request
