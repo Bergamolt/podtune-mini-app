@@ -55,6 +55,11 @@ body:has(.player) {
   height: calc((min(1024px, 100vw) - 3rem) / 3);
 }
 
+.skeletonContinue {
+  /* flex min-w-64 max-w-64 h-20 p-2 bg-[var(--tg-theme-section-bg-color)] rounded-lg items-center overflow-hidden */
+  @apply flex items-center justify-center bg-gray-300 rounded-md animate-pulse dark:bg-gray-700 min-w-64 max-w-64 h-20;
+}
+
 .player {
   height: var(--player-height);
 }

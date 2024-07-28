@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { TelegramProvider } from './TelegramProvider'
 import { Analytics } from '@vercel/analytics/react'
 import '@telegram-apps/telegram-ui/dist/styles.css'
-import './globals.css'
-import { Player } from './containers/Player'
-import ScrollLock from './ScrollLock'
-import { TelegramUI } from './TelegramUI'
+import '@/app/globals.css'
+import ScrollLock from '@/app/ScrollLock'
+import { TelegramUI } from '@/app/TelegramUI'
+import { PlayerProvider } from '@/app/context/player'
 
 export const metadata: Metadata = {
   title: 'PodTune: Podcast Player',
@@ -22,8 +22,9 @@ export default function RootLayout({
       <body data-dev={process.env.NODE_ENV === 'development'}>
         <TelegramProvider>
           <TelegramUI>
-            <main className='root overflow-y-auto'>{children}</main>
-            <Player />
+            <PlayerProvider>
+              <main className='root overflow-y-auto'>{children}</main>
+            </PlayerProvider>
           </TelegramUI>
         </TelegramProvider>
         <ScrollLock />

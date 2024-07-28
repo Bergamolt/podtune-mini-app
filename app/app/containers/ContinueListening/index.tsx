@@ -1,6 +1,6 @@
 'use client'
 
-import { Caption, Headline, Text } from '@telegram-apps/telegram-ui'
+import { Caption, Headline } from '@telegram-apps/telegram-ui'
 import {
   EpisodeContinue,
   useContinueListening,
@@ -11,6 +11,7 @@ import { charLimit } from '@/app/utils/charLimit'
 export function ContinueListening() {
   const episodes = useContinueListening((state) => state.episodes)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
+  const loading = useContinueListening((state) => state.loading)
 
   const setActiveEpisode = (episode: EpisodeContinue) => () => {
     setEpisode({
@@ -23,15 +24,16 @@ export function ContinueListening() {
     })
   }
 
-  if (!episodes.length) {
-    return null
-  }
-
   return (
     <section className='p-4 pb-0 w-full'>
       <Headline weight='2'>Continue listening</Headline>
 
       <div className='flex gap-2 w-full mx-auto mt-4 overflow-x-auto'>
+        {loading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className='skeletonContinue' />
+          ))}
+
         {episodes.map((episode) => {
           // Remove episode from the list if it's already finished
           // TODO: move this logic to the store
@@ -50,7 +52,6 @@ export function ContinueListening() {
                 <Caption weight='2'>{charLimit(episode.title, 40)}</Caption>
                 <div>
                   <Caption>
-                    {/* 1067sec - 902sec = 17 min left or 10 sec */}
                     {Math.floor(episode.duration - episode.position) > 60
                       ? `${Math.floor(
                           (episode.duration - episode.position) / 60

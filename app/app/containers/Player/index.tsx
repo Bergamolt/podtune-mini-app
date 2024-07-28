@@ -1,20 +1,22 @@
 'use client'
 
-import { createRef, useEffect, useState } from 'react'
+import { RefObject, useEffect, useState } from 'react'
 import AudioPlayer from 'react-h5-audio-player'
 import H5AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
 import { useListeningEpisode } from '@/app/store/useListeningEpisode'
-// import { useContinueListening } from '@/app/store/useContinueListening'
 import { useTelegram } from '@/app/TelegramProvider'
 
-export function Player() {
+type PlayerProps = {
+  playerRef: RefObject<H5AudioPlayer>
+  onChangePlaying: (isPlaying: boolean) => void
+}
+
+export function Player({ playerRef, onChangePlaying }: PlayerProps) {
   const { webApp } = useTelegram()
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
-  // const setEpisodes = useContinueListening((state) => state.setEpisodes)
   const [isReady, setIsReady] = useState(false)
-  const playerRef = createRef<H5AudioPlayer>()
 
   useEffect(() => {
     if (episode?.position === undefined) {
@@ -31,12 +33,6 @@ export function Player() {
 
       playerRef.current.audio.current.currentTime = currentTime
       playerRef.current.audio.current.play()
-      // playerRef.current.audio.current.addEventListener('timeupdate', (e) => {
-      //   localStorage.setItem(
-      //     'position',
-      //     JSON.stringify(playerRef.current?.audio.current?.currentTime)
-      //   )
-      // })
     }
 
     return () => {
@@ -53,8 +49,6 @@ export function Player() {
       ref={playerRef}
       src={episode.url}
       onListen={() => {
-        console.log('Update')
-
         if (playerRef.current?.audio.current?.currentTime) {
           setEpisode({
             title: episode.title,
@@ -69,9 +63,15 @@ export function Player() {
       onLoadedData={() => setIsReady(true)}
       onPlay={() => {
         webApp?.enableClosingConfirmation()
+        onChangePlaying(true)
+
+        if (typeof document !== 'undefined') {
+          document.title = episode.title
+        }
       }}
       onPause={() => {
         webApp?.disableClosingConfirmation()
+        onChangePlaying(false)
       }}
       customVolumeControls={[]}
       customAdditionalControls={[]}
