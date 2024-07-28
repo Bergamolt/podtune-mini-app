@@ -69,7 +69,7 @@ export function Player() {
       customVolumeControls={[]}
       customAdditionalControls={[]}
       autoPlay={false}
-      listenInterval={4}
+      listenInterval={4000}
       className='bg-[var(--tg-theme-bg-color)] shadow-none player'
     />
   )
