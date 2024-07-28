@@ -18,7 +18,7 @@ type ListeningEpisode = {
 
 export const useListeningEpisode = create<ListeningEpisode>((set) => ({
   episode: null,
-  setEpisode: (episode: Episode) => {
+  setEpisode: async (episode: Episode) => {
     const continueListenigEpisodes = useContinueListening.getState().episodes
 
     const isAdded = continueListenigEpisodes.find((e) => e.url === episode.url)
@@ -30,7 +30,7 @@ export const useListeningEpisode = create<ListeningEpisode>((set) => ({
     }
 
     try {
-      window.Telegram.WebApp.CloudStorage.setItem(
+      await window.Telegram.WebApp.CloudStorage.setItem(
         'listening-episode',
         JSON.stringify(episode)
       )
