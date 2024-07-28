@@ -1,6 +1,6 @@
 'use client'
 
-import { createRef, useEffect, useRef, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 import AudioPlayer from 'react-h5-audio-player'
 import H5AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
@@ -14,7 +14,6 @@ export function Player() {
   const setEpisodes = useContinueListening((state) => state.setEpisodes)
   const [isReady, setIsReady] = useState(false)
   const playerRef = createRef<H5AudioPlayer>()
-  const timerEpisodePosition = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
     if (episode?.position === undefined) {
@@ -38,12 +37,6 @@ export function Player() {
     }
   }, [episode, isReady, playerRef])
 
-  useEffect(() => {
-    return () => {
-      clearInterval(timerEpisodePosition.current)
-    }
-  }, [episode])
-
   if (!episode) {
     return null
   }
@@ -53,36 +46,23 @@ export function Player() {
       ref={playerRef}
       src={episode.url}
       onListen={() => {
-        // if (playerRef.current?.audio.current?.currentTime) {
-        //   setEpisodes({
-        //     title: episode.title,
-        //     author: episode.author,
-        //     image: episode.image,
-        //     url: episode.url,
-        //     position: playerRef.current?.audio.current?.currentTime,
-        //     duration: playerRef.current?.audio.current?.duration,
-        //   })
-        // }
+        if (playerRef.current?.audio.current?.currentTime) {
+          setEpisodes({
+            title: episode.title,
+            author: episode.author,
+            image: episode.image,
+            url: episode.url,
+            position: playerRef.current?.audio.current?.currentTime,
+            duration: playerRef.current?.audio.current?.duration,
+          })
+        }
       }}
       onLoadedData={() => setIsReady(true)}
       onPlay={() => {
         webApp?.enableClosingConfirmation()
-        timerEpisodePosition.current = setInterval(() => {
-          if (playerRef.current?.audio.current?.currentTime) {
-            setEpisodes({
-              title: episode.title,
-              author: episode.author,
-              image: episode.image,
-              url: episode.url,
-              position: playerRef.current?.audio.current?.currentTime,
-              duration: playerRef.current?.audio.current?.duration,
-            })
-          }
-        }, 1000)
       }}
       onPause={() => {
         webApp?.disableClosingConfirmation()
-        clearInterval(timerEpisodePosition.current as NodeJS.Timeout)
       }}
       customVolumeControls={[]}
       customAdditionalControls={[]}
