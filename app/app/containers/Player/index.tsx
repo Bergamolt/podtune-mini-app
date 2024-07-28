@@ -46,6 +46,8 @@ export function Player() {
       ref={playerRef}
       src={episode.url}
       onListen={() => {
+        console.log('Update')
+
         if (playerRef.current?.audio.current?.currentTime) {
           setEpisodes({
             title: episode.title,
@@ -67,6 +69,7 @@ export function Player() {
       customVolumeControls={[]}
       customAdditionalControls={[]}
       autoPlay={false}
+      listenInterval={4}
       className='bg-[var(--tg-theme-bg-color)] shadow-none player'
     />
   )
