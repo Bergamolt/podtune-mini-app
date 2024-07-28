@@ -5,13 +5,14 @@ import AudioPlayer from 'react-h5-audio-player'
 import H5AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
 import { useListeningEpisode } from '@/app/store/useListeningEpisode'
-import { useContinueListening } from '@/app/store/useContinueListening'
+// import { useContinueListening } from '@/app/store/useContinueListening'
 import { useTelegram } from '@/app/TelegramProvider'
 
 export function Player() {
   const { webApp } = useTelegram()
   const episode = useListeningEpisode((state) => state.episode)
-  const setEpisodes = useContinueListening((state) => state.setEpisodes)
+  const setEpisode = useListeningEpisode((state) => state.setEpisode)
+  // const setEpisodes = useContinueListening((state) => state.setEpisodes)
   const [isReady, setIsReady] = useState(false)
   const playerRef = createRef<H5AudioPlayer>()
 
@@ -30,6 +31,12 @@ export function Player() {
 
       playerRef.current.audio.current.currentTime = currentTime
       playerRef.current.audio.current.play()
+      // playerRef.current.audio.current.addEventListener('timeupdate', (e) => {
+      //   localStorage.setItem(
+      //     'position',
+      //     JSON.stringify(playerRef.current?.audio.current?.currentTime)
+      //   )
+      // })
     }
 
     return () => {
@@ -49,7 +56,7 @@ export function Player() {
         console.log('Update')
 
         if (playerRef.current?.audio.current?.currentTime) {
-          setEpisodes({
+          setEpisode({
             title: episode.title,
             author: episode.author,
             image: episode.image,

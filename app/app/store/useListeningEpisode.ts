@@ -20,6 +20,7 @@ export const useListeningEpisode = create<ListeningEpisode>((set) => ({
   episode: null,
   setEpisode: async (episode: Episode) => {
     const continueListenigEpisodes = useContinueListening.getState().episodes
+    const setListenigEpisodes = useContinueListening.getState().setEpisodes
 
     const isAdded = continueListenigEpisodes.find((e) => e.url === episode.url)
 
@@ -27,6 +28,7 @@ export const useListeningEpisode = create<ListeningEpisode>((set) => ({
       set({ episode: { ...episode, position: 0 } })
     } else {
       set({ episode: isAdded })
+      setListenigEpisodes(isAdded)
     }
 
     try {
