@@ -20,9 +20,9 @@ export function Play({ author, title, image, url, duration }: PlayProps) {
   const handlePlay = () => {
     if (episode?.url === url) {
       isPlaying ? pause() : play()
-    } else {
-      setEpisode({ author, title, image, url, duration })
     }
+
+    setEpisode({ author, title, image, url, duration })
   }
 
   if (isPlaying && episode?.url === url) {
