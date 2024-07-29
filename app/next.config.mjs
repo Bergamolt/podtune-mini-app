@@ -12,7 +12,7 @@ export default withSentryConfig(nextConfig, {
   project: "podtune",
 
   // An auth token is required for uploading source maps.
-  authToken: process.env.SENTRY_AUTH_TOKEN,
+  authToken: '3cff42724da311efaec8ae48b02d9508',
 
   silent: false, // Can be used to suppress logs
 });
