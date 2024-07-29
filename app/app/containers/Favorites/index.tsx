@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/app/constants/routes'
 
 export function Favorites() {
-  const loading = useFavoritePodcasts((state) => state.loading)
+  const loaded = useFavoritePodcasts((state) => state.loaded)
   const favorites = useFavoritePodcasts((state) => state.favorites)
   const router = useRouter()
 
@@ -15,11 +15,25 @@ export function Favorites() {
     router.push(ROUTES.SEARCH)
   }
 
+  if (!loaded) {
+    return (
+      <section className='p-4 pb-0 w-full'>
+        <Headline weight='2'>Favorites</Headline>
+
+        <div className='grid grid-cols-3 gap-2 w-full max-w-screen-lg mx-auto mt-4'>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className='skeletonCard' />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className='p-4 pb-0 w-full'>
       <Headline weight='2'>Favorites</Headline>
 
-      {!loading && !favorites.length && (
+      {!favorites.length && (
         <div className='flex flex-col'>
           <Text className='text-center !my-6'>
             Folow some podcasts and they&apos;ll appear <br /> here for easy
@@ -32,23 +46,15 @@ export function Favorites() {
       )}
 
       <div className='grid grid-cols-3 gap-2 w-full max-w-screen-lg mx-auto mt-4'>
-        {loading
-          ? Array.from({ length: 3 }).map((_, index) => (
-              <div key={index} className='skeletonCard' />
-            ))
-          : favorites.map((podcast) => (
-              <Link
-                key={podcast.id}
-                href={`/podcast/${podcast.id}`}
-                scroll={false}
-              >
-                <img
-                  src={podcast.image}
-                  alt={podcast.title}
-                  className='object-cover rounded-md mx-auto w-full h-full'
-                />
-              </Link>
-            ))}
+        {favorites.map((podcast) => (
+          <Link key={podcast.id} href={`/podcast/${podcast.id}`} scroll={false}>
+            <img
+              src={podcast.image}
+              alt={podcast.title}
+              className='object-cover rounded-md mx-auto w-full h-full'
+            />
+          </Link>
+        ))}
       </div>
     </section>
   )

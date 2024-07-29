@@ -11,12 +11,12 @@ type FavoritePodcasts = {
   favorites: FavoritePodcast[]
   setFavorites: (podcast: FavoritePodcast) => void
   loadFavorites: () => void
-  loading: boolean
+  loaded: boolean
 }
 
 export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
-  loading: false,
   favorites: [],
+  loaded: false,
   setFavorites: async (podcast: FavoritePodcast) => {
     const favorites = get().favorites
     const isFavorite = favorites.some((p) => p.id === podcast.id)
@@ -37,8 +37,6 @@ export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
     }
   },
   loadFavorites: async () => {
-    set({ loading: true })
-
     try {
       window?.Telegram.WebApp.CloudStorage.getItem(
         'favorite-podcasts',
@@ -53,11 +51,12 @@ export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
             })
           }
 
-          set({ loading: false })
+          set({ loaded: true })
         }
       )
     } catch (error) {
       console.error(error)
+      set({ loaded: true })
     }
   },
 }))

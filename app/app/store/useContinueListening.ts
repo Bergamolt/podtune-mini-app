@@ -10,12 +10,12 @@ type ContinueListening = {
   episodes: EpisodeContinue[]
   setEpisodes: (episode: EpisodeContinue) => void
   loadEpisodes: () => void
-  loading: boolean
+  loaded: boolean
 }
 
 export const useContinueListening = create<ContinueListening>((set, get) => ({
   episodes: [],
-  loading: false,
+  loaded: false,
   setEpisodes: async (episode: EpisodeContinue) => {
     const episodes = get().episodes
     const added = episodes.find((e) => e.url === episode.url)
@@ -43,7 +43,6 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
     }
   },
   loadEpisodes: async () => {
-    set({ loading: true })
     try {
       window?.Telegram.WebApp.CloudStorage.getItem(
         'continue-listening',
@@ -57,12 +56,13 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
               episodes: [...get().episodes, ...JSON.parse(value)],
             })
           }
-          
-          set({ loading: false })
+
+          set({ loaded: true })
         }
       )
     } catch (error) {
       console.error(error)
+      set({ loaded: true })
     }
   },
 }))

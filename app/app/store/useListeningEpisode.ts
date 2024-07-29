@@ -26,6 +26,7 @@ export const useListeningEpisode = create<ListeningEpisode>((set) => ({
 
     if (!isAdded) {
       set({ episode: { ...episode, position: 0 } })
+      setListenigEpisodes({ ...episode, position: 0 })
     } else {
       set({ episode: isAdded })
       setListenigEpisodes(isAdded)
