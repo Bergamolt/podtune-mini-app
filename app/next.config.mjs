@@ -7,12 +7,14 @@ const nextConfig = {
   },
 };
 
+console.log("process.env", process.env.SENTRY_AUTH_TOKEN);
+
 export default withSentryConfig(nextConfig, {
   org: "bergamolt-tech",
   project: "podtune",
 
   // An auth token is required for uploading source maps.
-  authToken: '3cff42724da311efaec8ae48b02d9508',
+  authToken: process.env.SENTRY_AUTH_TOKEN,
 
   silent: false, // Can be used to suppress logs
 });
