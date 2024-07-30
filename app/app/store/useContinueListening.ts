@@ -34,7 +34,7 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
     }
 
     try {
-      window.Telegram.WebApp.CloudStorage.setItem(
+      window?.Telegram.WebApp.CloudStorage.setItem(
         'continue-listening',
         JSON.stringify([added || episode, ...episodes])
       )

@@ -28,7 +28,7 @@ export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
     }
 
     try {
-      window.Telegram.WebApp.CloudStorage.setItem(
+      window?.Telegram.WebApp.CloudStorage.setItem(
         'favorite-podcasts',
         JSON.stringify(get().favorites)
       )

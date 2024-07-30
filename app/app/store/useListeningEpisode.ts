@@ -33,7 +33,7 @@ export const useListeningEpisode = create<ListeningEpisode>((set) => ({
     }
 
     try {
-      window.Telegram.WebApp.CloudStorage.setItem(
+      window?.Telegram.WebApp.CloudStorage.setItem(
         'listening-episode',
         JSON.stringify(episode)
       )
