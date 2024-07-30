@@ -22,21 +22,21 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
 
     if (!added) {
       set({
-        episodes: [episode, ...episodes],
+        episodes: [episode].concat(episodes),
       })
     } else {
       added.position = episode.position
       added.duration = episode.duration
 
       set({
-        episodes: [added, ...episodes.filter((e) => e.url !== episode.url)],
+        episodes: [added].concat(episodes.filter((e) => e.url !== episode.url)),
       })
     }
 
     try {
       window?.Telegram.WebApp.CloudStorage.setItem(
         'continue-listening',
-        JSON.stringify([added || episode, ...episodes])
+        JSON.stringify(get().episodes)
       )
     } catch (error) {
       console.error(error)
