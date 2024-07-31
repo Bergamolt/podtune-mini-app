@@ -7,21 +7,26 @@ import {
 } from '@/app/store/useContinueListening'
 import { useListeningEpisode } from '@/app/store/useListeningEpisode'
 import { charLimit } from '@/app/utils/charLimit'
+import { useTelegram } from '@/app/TelegramProvider'
 
 export function ContinueListening() {
+  const { user } = useTelegram()
   const episodes = useContinueListening((state) => state.episodes)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
   const loaded = useContinueListening((state) => state.loaded)
 
   const setActiveEpisode = (episode: EpisodeContinue) => () => {
-    setEpisode({
-      title: episode.title,
-      author: episode.author,
-      image: episode.image,
-      url: episode.url,
-      position: episode.position,
-      duration: episode.duration,
-    })
+    setEpisode(
+      {
+        title: episode.title,
+        author: episode.author,
+        image: episode.image,
+        url: episode.url,
+        position: episode.position,
+        duration: episode.duration,
+      },
+      user.id
+    )
   }
 
   if (!loaded) {

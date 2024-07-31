@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { getFavoritePodcasts, setFavoritePodcasts } from './store'
 
 export type FavoritePodcast = {
   id: string
@@ -9,15 +10,15 @@ export type FavoritePodcast = {
 
 type FavoritePodcasts = {
   favorites: FavoritePodcast[]
-  setFavorites: (podcast: FavoritePodcast) => void
-  loadFavorites: () => void
+  setFavorites: (podcast: FavoritePodcast, userId: number) => void
+  loadFavorites: (userId: number) => void
   loaded: boolean
 }
 
 export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
   favorites: [],
   loaded: false,
-  setFavorites: (podcast: FavoritePodcast) => {
+  setFavorites: async (podcast, userId) => {
     const favorites = get().favorites
     const isFavorite = favorites.some((p) => p.id === podcast.id)
 
@@ -28,32 +29,16 @@ export const useFavoritePodcasts = create<FavoritePodcasts>((set, get) => ({
     }
 
     try {
-      window?.Telegram.WebApp.CloudStorage.setItem(
-        'favorite-podcasts',
-        JSON.stringify(get().favorites)
-      )
+      await setFavoritePodcasts(get().favorites, userId)
     } catch (error) {
       console.error(error)
     }
   },
-  loadFavorites: () => {
+  loadFavorites: async (userId) => {
     try {
-      window?.Telegram.WebApp.CloudStorage.getItem(
-        'favorite-podcasts',
-        (error: Error | null, value: string) => {
-          if (error?.message) {
-            window.Telegram.WebApp.showAlert(error.message)
-          }
-
-          if (value) {
-            set({
-              favorites: [...get().favorites, ...JSON.parse(value)],
-            })
-          }
-
-          set({ loaded: true })
-        }
-      )
+      const data = await getFavoritePodcasts(userId)
+      set({ favorites: data })
+      set({ loaded: true })
     } catch (error) {
       console.error(error)
       set({ loaded: true })

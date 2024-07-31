@@ -5,7 +5,7 @@ import { useContinueListening } from './useContinueListening'
 import { useListeningEpisode } from './useListeningEpisode'
 
 export const useInitStore = () => {
-  const { webApp } = useContext(TelegramContext)
+  const { webApp, user } = useContext(TelegramContext)
   const loadFavorites = useFavoritePodcasts((state) => state.loadFavorites)
   const loadEpisodeActive = useListeningEpisode((state) => state.loadEpisode)
   const loadContinueListening = useContinueListening(
@@ -14,9 +14,9 @@ export const useInitStore = () => {
 
   useEffect(() => {
     if (webApp) {
-      loadFavorites()
-      loadEpisodeActive()
-      loadContinueListening()
+      loadFavorites(user.id)
+      loadEpisodeActive(user.id)
+      loadContinueListening(user.id)
     }
-  }, [webApp, loadFavorites, loadEpisodeActive, loadContinueListening])
+  }, [webApp, loadFavorites, loadEpisodeActive, loadContinueListening, user.id])
 }

@@ -13,7 +13,7 @@ type PlayerProps = {
 }
 
 export function Player({ playerRef, onChangePlaying }: PlayerProps) {
-  const { webApp } = useTelegram()
+  const { webApp, user } = useTelegram()
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
   const [isReady, setIsReady] = useState(false)
@@ -50,14 +50,17 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
       src={episode.url}
       onListen={() => {
         if (playerRef.current?.audio.current?.currentTime) {
-          setEpisode({
-            title: episode.title,
-            author: episode.author,
-            image: episode.image,
-            url: episode.url,
-            position: playerRef.current?.audio.current?.currentTime,
-            duration: playerRef.current?.audio.current?.duration,
-          })
+          setEpisode(
+            {
+              title: episode.title,
+              author: episode.author,
+              image: episode.image,
+              url: episode.url,
+              position: playerRef.current?.audio.current?.currentTime,
+              duration: playerRef.current?.audio.current?.duration,
+            },
+            user.id
+          )
         }
       }}
       onLoadedData={() => setIsReady(true)}

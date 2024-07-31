@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { Episode } from './useListeningEpisode'
+import { getContinueListening, setContinueListening } from './store'
 
 export type EpisodeContinue = Episode & {
   position: number
@@ -8,15 +9,15 @@ export type EpisodeContinue = Episode & {
 
 type ContinueListening = {
   episodes: EpisodeContinue[]
-  setEpisodes: (episode: EpisodeContinue) => void
-  loadEpisodes: () => void
+  setEpisodes: (episode: EpisodeContinue, userId: number) => void
+  loadEpisodes: (userId: number) => void
   loaded: boolean
 }
 
 export const useContinueListening = create<ContinueListening>((set, get) => ({
   episodes: [],
   loaded: false,
-  setEpisodes: async (episode: EpisodeContinue) => {
+  setEpisodes: async (episode, userId) => {
     const episodes = get().episodes
     const added = episodes.find((e) => e.url === episode.url)
 
@@ -34,41 +35,16 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
     }
 
     try {
-      await new Promise((resolve, reject) => {
-        window?.Telegram.WebApp.CloudStorage.setItem(
-          'continue-listening',
-          JSON.stringify(get().episodes),
-          (error: Error | null) => {
-            if (error) {
-              reject(error)
-            }
-
-            resolve(true)
-          }
-        )
-      })
+      await setContinueListening(get().episodes, userId)
     } catch (error) {
       console.error(error)
     }
   },
-  loadEpisodes: () => {
+  loadEpisodes: async (userId) => {
     try {
-      window?.Telegram.WebApp.CloudStorage.getItem(
-        'continue-listening',
-        (error: Error | null, value: string) => {
-          if (error?.message) {
-            window.Telegram.WebApp.showAlert(error.message)
-          }
-
-          if (value) {
-            set({
-              episodes: [...get().episodes, ...JSON.parse(value)],
-            })
-          }
-
-          set({ loaded: true })
-        }
-      )
+      const data = await getContinueListening(userId)
+      set({ episodes: data })
+      set({ loaded: true })
     } catch (error) {
       console.error(error)
       set({ loaded: true })

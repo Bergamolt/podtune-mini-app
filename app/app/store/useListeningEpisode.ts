@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { useContinueListening } from './useContinueListening'
+import { getListeningEpisode, setListeningEpisode } from './store'
 
 export type Episode = {
   title: string
@@ -12,13 +13,13 @@ export type Episode = {
 
 type ListeningEpisode = {
   episode: Episode | null
-  setEpisode: (episode: Episode) => void
-  loadEpisode: () => void
+  setEpisode: (episode: Episode, userId: number) => void
+  loadEpisode: (userId: number) => void
 }
 
 export const useListeningEpisode = create<ListeningEpisode>((set) => ({
   episode: null,
-  setEpisode: async (episode: Episode) => {
+  setEpisode: async (episode, userId) => {
     const continueListenigEpisodes = useContinueListening.getState().episodes
     const setListenigEpisodes = useContinueListening.getState().setEpisodes
 
@@ -26,44 +27,22 @@ export const useListeningEpisode = create<ListeningEpisode>((set) => ({
 
     if (!isAdded) {
       set({ episode: { ...episode, position: 0 } })
-      setListenigEpisodes({ ...episode, position: 0 })
+      setListenigEpisodes({ ...episode, position: 0 }, userId)
     } else {
       set({ episode: isAdded })
-      setListenigEpisodes(isAdded)
+      setListenigEpisodes(isAdded, userId)
     }
 
     try {
-      await new Promise((resolve, reject) => {
-        window?.Telegram.WebApp.CloudStorage.setItem(
-          'listening-episode',
-          JSON.stringify(episode),
-          (error: Error | null) => {
-            if (error) {
-              reject(error)
-            }
-
-            resolve(true)
-          }
-        )
-      })
+      await setListeningEpisode(episode, userId)
     } catch (error) {
       console.error(error)
     }
   },
-  loadEpisode: () => {
+  loadEpisode: async (userId) => {
     try {
-      window?.Telegram.WebApp.CloudStorage.getItem(
-        'listening-episode',
-        (error: Error | null, value: string) => {
-          if (error?.message) {
-            window.Telegram.WebApp.showAlert(error.message)
-          }
-
-          if (value) {
-            set({ episode: JSON.parse(value) })
-          }
-        }
-      )
+      const data = await getListeningEpisode(userId)
+      set({ episode: data })
     } catch (error) {
       console.error(error)
     }

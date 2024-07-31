@@ -1,6 +1,7 @@
 'use client'
 
 import { useFavoritePodcasts } from '@/app/store/useFavoritePodcasts'
+import { useTelegram } from '@/app/TelegramProvider'
 import { Button } from '@telegram-apps/telegram-ui'
 
 type FavoriteProps = {
@@ -11,12 +12,13 @@ type FavoriteProps = {
 }
 
 export function Favorite({ id, title, image, author }: FavoriteProps) {
+  const { user } = useTelegram()
   const favorites = useFavoritePodcasts((state) => state.favorites)
   const setFavorites = useFavoritePodcasts((state) => state.setFavorites)
   const isFavorite = favorites.some((p) => p.id === id)
 
   const handleFavorite = () => {
-    setFavorites({ id, title, image, author })
+    setFavorites({ id, title, image, author }, user.id)
   }
 
   return (

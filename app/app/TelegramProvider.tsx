@@ -55,7 +55,7 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
           user: webApp.initDataUnsafe.user,
         }
       : {
-          user: undefined,
+          user: { id: undefined },
           webApp: undefined,
           unsafeData: undefined,
         }
