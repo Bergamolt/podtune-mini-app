@@ -22,8 +22,8 @@ declare global {
 }
 
 export interface ITelegramContext {
-  webApp?: TelegramWebApps.WebApp
   user: TelegramWebApps.WebAppUser
+  webApp?: TelegramWebApps.WebApp
 }
 
 // @ts-ignore
@@ -55,7 +55,7 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
           user: webApp.initDataUnsafe.user,
         }
       : {
-          user: { id: '' },
+          user: undefined,
           webApp: undefined,
           unsafeData: undefined,
         }
@@ -71,9 +71,9 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
           if (typeof window !== 'undefined' && window.Telegram) {
             const app = window.Telegram.WebApp
 
-            app.ready()
             app.expand()
             setWebApp(app)
+            app.ready()
           }
         }}
       />
