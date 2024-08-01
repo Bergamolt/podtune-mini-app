@@ -13,26 +13,38 @@ export const setContinueListening = async (
   episodes: EpisodeContinue[],
   userId: number
 ) => {
-  await db.collection(CONTINUE_LISTENING_KEY).doc(userId.toString()).set(episodes)
+  await db
+    .collection(CONTINUE_LISTENING_KEY)
+    .doc(userId.toString())
+    .set(Object.assign({}, episodes))
 }
 
 export const getContinueListening = async (userId: number) => {
-  const data = await db.collection(CONTINUE_LISTENING_KEY).doc(userId.toString()).get()
+  const snapshot = await db
+    .collection(CONTINUE_LISTENING_KEY)
+    .doc(userId.toString())
+    .get()
 
-  return data as unknown as EpisodeContinue[]
+  return Object.assign([], snapshot.data()) as EpisodeContinue[]
 }
 
 export const setFavoritePodcasts = async (
   favorites: FavoritePodcast[],
   userId: number
 ) => {
-  await db.collection(FAVORITE_PODCASTS_KEY).doc(userId.toString()).set(favorites)
+  await db
+    .collection(FAVORITE_PODCASTS_KEY)
+    .doc(userId.toString())
+    .set(Object.assign({}, favorites))
 }
 
 export const getFavoritePodcasts = async (userId: number) => {
-  const data = await db.collection(FAVORITE_PODCASTS_KEY).doc(userId.toString()).get()
+  const snapshot = await db
+    .collection(FAVORITE_PODCASTS_KEY)
+    .doc(userId.toString())
+    .get()
 
-  return data as unknown as FavoritePodcast[]
+  return Object.assign([], snapshot.data())
 }
 
 export const setListeningEpisode = async (episode: Episode, userId: number) => {
@@ -40,7 +52,10 @@ export const setListeningEpisode = async (episode: Episode, userId: number) => {
 }
 
 export const getListeningEpisode = async (userId: number) => {
-  const data = await db.collection(LISTENING_EPISODE_KEY).doc(userId.toString()).get()
+  const snapshot = await db
+    .collection(LISTENING_EPISODE_KEY)
+    .doc(userId.toString())
+    .get()
 
-  return data as unknown as Episode
+  return snapshot.data() as Episode
 }

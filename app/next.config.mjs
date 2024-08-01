@@ -7,8 +7,6 @@ const nextConfig = {
   },
 };
 
-console.log("process.env", process.env.SENTRY_AUTH_TOKEN);
-
 export default withSentryConfig(nextConfig, {
   org: "bergamolt-tech",
   project: "podtune",
