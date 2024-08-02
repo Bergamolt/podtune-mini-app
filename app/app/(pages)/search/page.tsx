@@ -1,4 +1,5 @@
 import { Search } from '@/app/containers/Search'
+import { TopShows } from '@/app/containers/TopShows'
 import { podcastIndex } from '@/app/utils/podcastIndex'
 import { Headline, Text } from '@telegram-apps/telegram-ui'
 import Link from 'next/link'
@@ -18,33 +19,37 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className='w-full'>
       <Search initialQuery={searchParams.query} autoFocus />
 
-      <div className='p-4'>
-        {data.feeds.length > 0 && (
-          <div className='flex flex-row'>
-            <Headline className='text-2xl font-bold'>
-              Search results for: {searchParams.query}
-            </Headline>
-          </div>
-        )}
+      {searchParams.query ? (
+        <div className='p-4'>
+          {data.feeds.length > 0 && (
+            <div className='flex flex-row'>
+              <Headline className='text-2xl font-bold'>
+                Search results for: {searchParams.query}
+              </Headline>
+            </div>
+          )}
 
-        {data.feeds.length === 0 && searchParams.query && (
-          <div className='flex flex-col'>
-            <Text className='text-center !my-2'>No podcasts found</Text>
-          </div>
-        )}
+          {data.feeds.length === 0 && searchParams.query && (
+            <div className='flex flex-col'>
+              <Text className='text-center !my-2'>No podcasts found</Text>
+            </div>
+          )}
 
-        <div className='grid grid-cols-3 gap-2 w-full max-w-screen-lg mx-auto mt-4'>
-          {data.feeds.map((podcast: any) => (
-            <Link key={podcast.id} href={`/podcast/${podcast.id}`}>
-              <img
-                src={podcast.image}
-                alt={podcast.title}
-                className='object-cover rounded-md mx-auto w-full h-full'
-              />
-            </Link>
-          ))}
+          <div className='grid grid-cols-3 gap-2 w-full max-w-screen-lg mx-auto mt-4'>
+            {data.feeds.map((podcast: any) => (
+              <Link key={podcast.id} href={`/podcast/${podcast.id}`}>
+                <img
+                  src={podcast.image}
+                  alt={podcast.title}
+                  className='object-cover rounded-md mx-auto w-full h-full'
+                />
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <TopShows />
+      )}
     </div>
   )
 }

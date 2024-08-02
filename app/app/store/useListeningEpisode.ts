@@ -8,7 +8,7 @@ export type Episode = {
   image: string
   url: string
   duration: number
-  position?: number
+  position: number
 }
 
 type ListeningEpisode = {
@@ -20,18 +20,10 @@ type ListeningEpisode = {
 export const useListeningEpisode = create<ListeningEpisode>((set) => ({
   episode: null,
   setEpisode: async (episode, userId) => {
-    const continueListenigEpisodes = useContinueListening.getState().episodes
-    const setListenigEpisodes = useContinueListening.getState().setEpisodes
+    const setContinueListenig = useContinueListening.getState().setEpisodes
 
-    const isAdded = continueListenigEpisodes.find((e) => e.url === episode.url)
-
-    if (!isAdded) {
-      set({ episode: { ...episode, position: 0 } })
-      setListenigEpisodes({ ...episode, position: 0 }, userId)
-    } else {
-      set({ episode: isAdded })
-      setListenigEpisodes(isAdded, userId)
-    }
+    set({ episode })
+    setContinueListenig(episode, userId)
 
     try {
       await setListeningEpisode(episode, userId)

@@ -20,7 +20,7 @@ export const useContinueListening = create<ContinueListening>((set, get) => ({
   setEpisodes: async (episode, userId) => {
     const episodes = get().episodes
     const added = episodes.find((e) => e.url === episode.url)
-
+    console.log(episode)
     if (!added) {
       set({
         episodes: [episode].concat(episodes),

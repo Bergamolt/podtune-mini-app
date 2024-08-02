@@ -24,7 +24,7 @@ export function Play({ author, title, image, url, duration }: PlayProps) {
       isPlaying ? pause() : play()
     }
 
-    setEpisode({ author, title, image, url, duration }, user.id)
+    setEpisode({ author, title, image, url, duration, position: 0 }, user.id)
   }
 
   if (isPlaying && episode?.url === url) {
