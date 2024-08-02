@@ -12,8 +12,6 @@ export const useInitStore = () => {
     (state) => state.loadEpisodes
   )
 
-  console.log('webApp', { webApp, user })
-
   useEffect(() => {
     if (webApp && user) {
       loadFavorites(user.id)

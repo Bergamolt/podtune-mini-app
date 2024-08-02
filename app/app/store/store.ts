@@ -1,6 +1,4 @@
-'use server'
-
-import { db } from '@/firebaseAdmin'
+import { getData, setData } from '@/firebase'
 import { Episode } from './useListeningEpisode'
 import { FavoritePodcast } from './useFavoritePodcasts'
 import { EpisodeContinue } from './useContinueListening'
@@ -13,49 +11,32 @@ export const setContinueListening = async (
   episodes: EpisodeContinue[],
   userId: number
 ) => {
-  await db
-    .collection(CONTINUE_LISTENING_KEY)
-    .doc(userId.toString())
-    .set(Object.assign({}, episodes))
+  await setData(CONTINUE_LISTENING_KEY, Object.assign({}, episodes), userId)
 }
 
 export const getContinueListening = async (userId: number) => {
-  const snapshot = await db
-    .collection(CONTINUE_LISTENING_KEY)
-    .doc(userId.toString())
-    .get()
+  const data = await getData<EpisodeContinue[]>(CONTINUE_LISTENING_KEY, userId)
 
-  return Object.assign([], snapshot.data()) as EpisodeContinue[]
+  return Object.assign([], data)
 }
 
 export const setFavoritePodcasts = async (
   favorites: FavoritePodcast[],
   userId: number
 ) => {
-  await db
-    .collection(FAVORITE_PODCASTS_KEY)
-    .doc(userId.toString())
-    .set(Object.assign({}, favorites))
+  await setData(FAVORITE_PODCASTS_KEY, Object.assign({}, favorites), userId)
 }
 
 export const getFavoritePodcasts = async (userId: number) => {
-  const snapshot = await db
-    .collection(FAVORITE_PODCASTS_KEY)
-    .doc(userId.toString())
-    .get()
+  const data = await getData<FavoritePodcast[]>(FAVORITE_PODCASTS_KEY, userId)
 
-  return Object.assign([], snapshot.data())
+  return Object.assign([], data)
 }
 
 export const setListeningEpisode = async (episode: Episode, userId: number) => {
-  await db.collection(LISTENING_EPISODE_KEY).doc(userId.toString()).set(episode)
+  await setData(LISTENING_EPISODE_KEY, episode, userId)
 }
 
 export const getListeningEpisode = async (userId: number) => {
-  const snapshot = await db
-    .collection(LISTENING_EPISODE_KEY)
-    .doc(userId.toString())
-    .get()
-
-  return snapshot.data() as Episode
+  return await getData<Episode>(LISTENING_EPISODE_KEY, userId)
 }
