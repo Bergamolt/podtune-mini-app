@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import * as firestore from '@firebase/firestore/lite'
+import * as firestore from 'firebase/firestore/lite'
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,8 +21,6 @@ export const getData = async <T>(
   const docRef = await firestore.doc(collectionRef, userId.toString())
   const snapshot = await firestore.getDoc(docRef)
 
-  console.log(snapshot)
-
   return snapshot.data() as T
 }
 
@@ -31,11 +29,8 @@ export const setData = async <T extends { [x: string]: any }>(
   data: T,
   userId: number
 ): Promise<void> => {
-  // await firestore.setDoc(
-  //   firestore.doc(firestore.collection(db, collection, userId.toString())),
-  //   data
-  // )
   const collectionRef = firestore.collection(db, collection)
   const docRef = firestore.doc(collectionRef, userId.toString())
+
   await firestore.setDoc(docRef, data)
 }
