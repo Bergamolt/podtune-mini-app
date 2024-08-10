@@ -3,16 +3,15 @@
 process.env.NTBA_FIX_319 = 'test'
 
 // Require our Telegram helper package
-const TelegramBot = require('node-telegram-bot-api')
+import TelegramBot, { Message } from 'node-telegram-bot-api'
 
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN)
-
-// bot.setWebHook(`${process.env.BOT_WEBHOOK_DOMAIN}/api/webhook`)
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN as string)
 
 // Export as an asynchronous function
 // We'll wait until we've responded to the user
-module.exports = async (request, response) => {
+export default async (request, response) => {
   console.log('Request received')
+  
   try {
     // Retrieve the POST request body that gets sent from Telegram
     const { body } = request
@@ -24,9 +23,10 @@ module.exports = async (request, response) => {
       const {
         chat: { id },
         text,
-      } = body.message
+        message_id: messageId,
+      } = body.message as Message
 
-      if (text === '/start' || text.includes('start tapps')) {
+      if (text === '/start' || text?.includes('start tapps')) {
         const message = `
 Hi there! 👋
 
@@ -46,13 +46,15 @@ Let's start your podcast journey! 🚀
                 {
                   text: 'Listen to Podcasts',
                   web_app: {
-                    url: 'https://gramcast-app.vercel.app?',
+                    url: 'https://gramcast-app.vercel.app',
                   },
                 },
               ],
             ],
           },
         })
+      } else {
+        await bot.deleteMessage(id, messageId)
       }
     }
   } catch (error) {
