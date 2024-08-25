@@ -37,7 +37,8 @@ With PodTune, you can easily discover, subscribe to, and listen to your favorite
 Let's start your podcast journey! 🚀
 
 📬 [Support](https://t.me/m/liL26q23YzFi)
-👉 [Submit feature requests](https://insigh.to/b/podtune)
+👉 [Submit a Feature Request](https://insigh.to/b/podtune)
+👉 [Twitter](https://twitter.com/BergaMolt)
 `
         await bot.sendMessage(id, message, {
           parse_mode: 'Markdown',
