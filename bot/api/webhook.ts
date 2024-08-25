@@ -11,7 +11,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_TOKEN as string)
 // We'll wait until we've responded to the user
 export default async (request, response) => {
   console.log('Request received')
-  
+
   try {
     // Retrieve the POST request body that gets sent from Telegram
     const { body } = request
@@ -36,7 +36,8 @@ With PodTune, you can easily discover, subscribe to, and listen to your favorite
 
 Let's start your podcast journey! 🚀
 
-📬 Support: https://t.me/m/liL26q23YzFi
+📬 [Support](https://t.me/m/liL26q23YzFi)
+👉 [Submit feature requests](https://insigh.to/b/podtune)
 `
         await bot.sendMessage(id, message, {
           parse_mode: 'Markdown',
