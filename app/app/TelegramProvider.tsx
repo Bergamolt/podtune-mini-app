@@ -74,6 +74,11 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
             const app = window.Telegram.WebApp
 
             app.expand()
+            // @ts-ignore
+            app.addToHomeScreen()
+            // @ts-ignore
+            app.requestFullscreen()
+            app.disableVerticalSwipes()
             setWebApp(app)
             app.ready()
           }
