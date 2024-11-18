@@ -2,9 +2,9 @@
 import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig = {
-  experimental: {
-    ppr: true,
-  },
+  // experimental: {
+  //   ppr: true,
+  // },
 };
 
 export default withSentryConfig(nextConfig, {

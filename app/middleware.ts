@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  // @ts-ignore
   const geo = request.geo
 
   const requestHeaders = new Headers(request.headers)
