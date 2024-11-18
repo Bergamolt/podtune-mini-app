@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
+import { geolocation } from '@vercel/functions'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  // @ts-ignore
-  const geo = request.geo
+  const geo = geolocation(request)
 
   const requestHeaders = new Headers(request.headers)
 
