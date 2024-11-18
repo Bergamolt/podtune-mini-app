@@ -4,14 +4,17 @@ import { Favorite } from './components/Favorite'
 import { getPodcastByFeedId } from './utils/getPodcastByFeedId'
 import { Episodes } from './components/Episodes'
 
+type Params = Promise<{
+  id: string
+}>
+
 type PodcastPageProps = {
-  params: {
-    id: string
-  }
+  params: Params
 }
 
 export default async function PodcastPage({ params }: PodcastPageProps) {
-  const podcast = await getPodcastByFeedId(params.id)
+  const { id } = await params
+  const podcast = await getPodcastByFeedId(id)
 
   return (
     <>

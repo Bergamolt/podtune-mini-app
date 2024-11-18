@@ -4,32 +4,35 @@ import { podcastIndex } from '@/app/utils/podcastIndex'
 import { Headline, Text } from '@telegram-apps/telegram-ui'
 import Link from 'next/link'
 
+type SearchParams = Promise<{
+  query: string
+}>
+
 type SearchPageProps = {
-  searchParams: {
-    query: string
-  }
+  searchParams: SearchParams
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const data = searchParams.query
-    ? await podcastIndex.searchByTerm(decodeURI(searchParams.query))
+  const { query } = await searchParams
+  const data = query
+    ? await podcastIndex.searchByTerm(decodeURI(query))
     : { feeds: [] }
 
   return (
     <div className='w-full'>
-      <Search initialQuery={searchParams.query} autoFocus />
+      <Search initialQuery={query} autoFocus />
 
-      {searchParams.query ? (
+      {query ? (
         <div className='p-4'>
           {data.feeds.length > 0 && (
             <div className='flex flex-row'>
               <Headline className='text-2xl font-bold'>
-                Search results for: {searchParams.query}
+                Search results for: {query}
               </Headline>
             </div>
           )}
 
-          {data.feeds.length === 0 && searchParams.query && (
+          {data.feeds.length === 0 && query && (
             <div className='flex flex-col'>
               <Text className='text-center !my-2'>No podcasts found</Text>
             </div>

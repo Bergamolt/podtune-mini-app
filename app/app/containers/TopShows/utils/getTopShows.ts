@@ -24,7 +24,8 @@ const getRandomPodcasts = (
 export const getTopShows = async (): Promise<
   PodcastsTrendingResponse['feeds']
 > => {
-  const country = headers().get('x-geo-country')
+  const headersList = await headers()
+  const country = headersList.get('x-geo-country')
   const lang = getLanguageCode(country)
   let data = await podcastIndex.podcastsTrending(100, null, lang)
 
