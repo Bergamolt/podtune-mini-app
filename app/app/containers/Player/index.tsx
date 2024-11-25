@@ -1,6 +1,6 @@
 'use client'
 
-import { RefObject, useEffect, useState } from 'react'
+import { RefObject, useEffect, useRef, useState } from 'react'
 import AudioPlayer from 'react-h5-audio-player'
 import H5AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
@@ -17,6 +17,7 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
   const [isReady, setIsReady] = useState(false)
+  const alive = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     if (episode?.position === undefined) {
@@ -41,20 +42,29 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
   }, [episode, isReady, playerRef])
 
   useEffect(() => {
-    if (!episode) return
+    if (!episode || !playerRef.current) return
 
     if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: episode.title,
         artist: episode.author,
-        artwork: episode.image ? [{ src: episode.image }] : undefined
+        artwork: episode.image ? [{ src: episode.image }] : undefined,
       })
 
       navigator.mediaSession.setActionHandler('play', () => {
         playerRef.current?.audio.current?.play()
+
+        if (alive.current) {
+          clearInterval(alive.current)
+        }
       })
+
       navigator.mediaSession.setActionHandler('pause', () => {
         playerRef.current?.audio.current?.pause()
+
+        alive.current = setInterval(() => {
+          navigator.mediaSession.playbackState = 'paused'
+        }, 500)
       })
     }
   }, [episode, playerRef])
@@ -83,7 +93,7 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
           if ('mediaSession' in navigator) {
             navigator.mediaSession.setPositionState({
               duration: playerRef.current.audio.current.duration,
-              position: playerRef.current.audio.current.currentTime
+              position: playerRef.current.audio.current.currentTime,
             })
           }
         }
