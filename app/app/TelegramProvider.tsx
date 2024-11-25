@@ -75,7 +75,7 @@ export const TelegramProvider = ({ children }: { children: ReactNode }) => {
 
             app.expand()
             // @ts-ignore
-            app.requestFullscreen()
+            // app.requestFullscreen()
             app.disableVerticalSwipes()
             setWebApp(app)
             app.ready()

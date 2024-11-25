@@ -17,6 +17,7 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
   const [isReady, setIsReady] = useState(false)
+  const [wakeLock, setWakeLock] = useState<WakeLockSentinel | null>(null)
 
   useEffect(() => {
     if (episode?.position === undefined) {
@@ -40,6 +41,73 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
     }
   }, [episode, isReady, playerRef])
 
+  useEffect(() => {
+    if (!episode) return
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: episode.title,
+        artist: episode.author,
+        artwork: episode.image ? [{ src: episode.image }] : undefined
+      })
+
+      navigator.mediaSession.setActionHandler('play', () => {
+        playerRef.current?.audio.current?.play()
+      })
+      navigator.mediaSession.setActionHandler('pause', () => {
+        playerRef.current?.audio.current?.pause()
+      })
+    }
+  }, [episode, playerRef])
+
+  useEffect(() => {
+    const requestWakeLock = async () => {
+      try {
+        if ('wakeLock' in navigator) {
+          const lock = await navigator.wakeLock.request('screen');
+          setWakeLock(lock);
+        }
+      } catch (err) {
+        console.error('Ошибка WakeLock:', err);
+      }
+    };
+
+    const releaseWakeLock = async () => {
+      if (wakeLock) {
+        await wakeLock.release();
+        setWakeLock(null);
+      }
+    };
+
+    if (episode) {
+      requestWakeLock();
+    }
+
+    return () => {
+      releaseWakeLock();
+    };
+  }, [episode]);
+
+  useEffect(() => {
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === 'visible' && episode) {
+        try {
+          if ('wakeLock' in navigator) {
+            const lock = await navigator.wakeLock.request('screen');
+            setWakeLock(lock);
+          }
+        } catch (err) {
+          console.error('Ошибка WakeLock:', err);
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [episode]);
+
   if (!episode) {
     return null
   }
@@ -61,6 +129,12 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
             },
             user.id
           )
+          if ('mediaSession' in navigator) {
+            navigator.mediaSession.setPositionState({
+              duration: playerRef.current.audio.current.duration,
+              position: playerRef.current.audio.current.currentTime
+            })
+          }
         }
       }}
       onLoadedData={() => setIsReady(true)}
