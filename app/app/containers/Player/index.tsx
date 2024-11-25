@@ -1,6 +1,6 @@
 'use client'
 
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { RefObject, useEffect, useState } from 'react'
 import AudioPlayer from 'react-h5-audio-player'
 import H5AudioPlayer from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
@@ -17,7 +17,6 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
   const episode = useListeningEpisode((state) => state.episode)
   const setEpisode = useListeningEpisode((state) => state.setEpisode)
   const [isReady, setIsReady] = useState(false)
-  const alive = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     if (episode?.position === undefined) {
@@ -53,18 +52,12 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
 
       navigator.mediaSession.setActionHandler('play', () => {
         playerRef.current?.audio.current?.play()
-
-        if (alive.current) {
-          clearInterval(alive.current)
-        }
+        navigator.mediaSession.playbackState = 'playing'
       })
 
       navigator.mediaSession.setActionHandler('pause', () => {
         playerRef.current?.audio.current?.pause()
-
-        alive.current = setInterval(() => {
-          navigator.mediaSession.playbackState = 'paused'
-        }, 500)
+        navigator.mediaSession.playbackState = 'paused'
       })
     }
   }, [episode, playerRef])
@@ -102,14 +95,12 @@ export function Player({ playerRef, onChangePlaying }: PlayerProps) {
       onPlay={() => {
         webApp?.enableClosingConfirmation()
         onChangePlaying(true)
-
-        if (typeof document !== 'undefined') {
-          document.title = episode.title
-        }
+        navigator.mediaSession.playbackState = 'playing'
       }}
       onPause={() => {
         webApp?.disableClosingConfirmation()
         onChangePlaying(false)
+        navigator.mediaSession.playbackState = 'paused'
       }}
       customVolumeControls={[]}
       customAdditionalControls={[]}
